@@ -4,6 +4,7 @@
 class ServerService : public Service
 {
 public:
-	
+	ServerService();
+	virtual ~ServerService();
 };
 

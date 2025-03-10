@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClientService.h" />
     <ClInclude Include="RefSingleton.h" />
     <ClInclude Include="ServerService.h" />
     <ClInclude Include="Service.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClientService.cpp" />
     <ClCompile Include="ServerService.cpp" />
     <ClCompile Include="Service.cpp" />
   </ItemGroup>

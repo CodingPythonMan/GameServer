@@ -18,12 +18,18 @@
     <ClInclude Include="ServerService.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="ClientService.h">
+      <Filter>Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Service.cpp">
       <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="ServerService.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientService.cpp">
       <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
