@@ -1,7 +1,8 @@
-#include "ServerService.h"
+#include "Server.h"
 #include <memory>
 
 int main()
 {
-	auto serverService = std::make_shared<ServerService>();
+	auto server = std::make_shared<Server>();
+	server->Start(L"127.0.0.1", 1231);
 }

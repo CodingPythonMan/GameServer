@@ -19,15 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClientService.h" />
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="IocpEvent.h" />
+    <ClInclude Include="IocpEventPool.h" />
+    <ClInclude Include="Macro.h" />
+    <ClInclude Include="IocpRegistrable.h" />
     <ClInclude Include="RefSingleton.h" />
-    <ClInclude Include="ServerService.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="Service.h" />
+    <ClInclude Include="Session.h" />
+    <ClInclude Include="SmartObject.h" />
+    <ClInclude Include="SmartObjectPool.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ClientService.cpp" />
-    <ClCompile Include="ServerService.cpp" />
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="IocpEvent.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="Service.cpp" />
+    <ClCompile Include="Session.cpp" />
+    <ClCompile Include="SmartObject.cpp" />
+    <ClCompile Include="SmartObjectPool.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -1,7 +1,7 @@
-#include "ClientService.h"
+#include "Client.h"
 #include <memory>
 
 int main()
 {
-	auto clientService = std::make_shared<ClientService>();
+	auto client = std::make_shared<Client>();
 }
