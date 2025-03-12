@@ -1,6 +1,6 @@
 #include "Server.h"
 #include "Macro.h"
-#include "IocpEventPool.h"
+#include "SessionPool.h"
 
 void Server::Start(const WCHAR ip[], int port, bool nagle)
 {
@@ -37,9 +37,22 @@ void Server::Start(const WCHAR ip[], int port, bool nagle)
 	}
 }
 
-void Server::Clear()
+void Server::Reset()
 {
 	::WSACleanup();
+}
+
+void Server::Update()
+{
+	DWORD numOfBytes = 0;
+	ULONG_PTR key = 0;
+	IocpEvent* iocpEvent = nullptr;
+
+	if (::GetQueuedCompletionStatus(mIocp, OUT &numOfBytes, OUT &key, OUT reinterpret_cast<LPOVERLAPPED*>(&iocpEvent), INFINITE))
+	{
+		Server* server = static_cast<Server*>(iocpEvent->mOwner);
+		server->_Accept(iocpEvent, numOfBytes);
+	}
 }
 
 void Server::_SetBaseSocketOption(bool nagle)
@@ -56,6 +69,11 @@ void Server::_SetBaseSocketOption(bool nagle)
 		int nodelay = 1;
 		::setsockopt(mListenSocket, SOL_SOCKET, TCP_NODELAY, (const char*)&nodelay, sizeof(nodelay));
 	}
+
+	// AcceptEx 는 함수 포인터 필요
+	DWORD bytes = 0;
+	GUID guid = WSAID_ACCEPTEX;
+	ASSERT_CRASH(SOCKET_ERROR != ::WSAIoctl(mListenSocket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid), &mAcceptEx, sizeof(mAcceptEx), OUT & bytes, NULL, NULL));
 }
 
 void Server::_Bind(const WCHAR ip[], int port)
@@ -79,8 +97,25 @@ void Server::_Listen()
 void Server::_RegisterAccept(std::shared_ptr<AcceptEvent> acceptEvent)
 {
 	// Session 을 생성해야 한다.
-	//\
-	// Session* session = SessionManager::GetInstance().CreateSession();
+	auto session = SessionPool::GetInstance().Alloc();
 	
-	//acceptEvent->mSession = session;
+	acceptEvent->Reset();
+	acceptEvent->mSession = session;
+
+	DWORD bytesReceived = 0;
+	if (false == mAcceptEx(mListenSocket, session->mClientSocket, session->mRecvBuffer.GetRearBufferPtr(), 0,
+		sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, OUT & bytesReceived, static_cast<LPOVERLAPPED>(acceptEvent.get())))
+	{
+		const INT32 errorCode = ::WSAGetLastError();
+		if (errorCode != WSA_IO_PENDING)
+		{
+			// 다시 RegisterAccept 한다.
+			_RegisterAccept(acceptEvent);
+		}
+	}
+}
+
+void Server::_Accept(IocpEvent* iocpEvent, INT32 numOfBytes)
+{
+	
 }

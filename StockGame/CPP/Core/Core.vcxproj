@@ -25,15 +25,18 @@
     <ClInclude Include="Macro.h" />
     <ClInclude Include="IocpRegistrable.h" />
     <ClInclude Include="RefSingleton.h" />
+    <ClInclude Include="RingBuffer.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="Session.h" />
+    <ClInclude Include="SessionPool.h" />
     <ClInclude Include="SmartObject.h" />
     <ClInclude Include="SmartObjectPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="IocpEvent.cpp" />
+    <ClCompile Include="RingBuffer.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Session.cpp" />

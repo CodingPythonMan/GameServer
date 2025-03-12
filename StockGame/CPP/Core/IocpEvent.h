@@ -1,5 +1,6 @@
 #pragma once
 #include <windows.h>
+#include <memory>
 #include <vector>
 
 class IocpRegistrable;
@@ -44,7 +45,7 @@ public:
 	AcceptEvent() : IocpEvent(EventType::ACCEPT) {}
 
 public:
-	Session*	mSession = nullptr;
+	std::shared_ptr<Session>	mSession = nullptr;
 };
 
 class RecvEvent : public IocpEvent

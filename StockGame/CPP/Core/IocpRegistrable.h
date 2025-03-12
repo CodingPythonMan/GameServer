@@ -2,5 +2,6 @@
 
 class IocpRegistrable
 {
-
+public:
+	virtual void Reset() abstract;
 };
