@@ -2,137 +2,153 @@
 #include <cstring>
 #include <algorithm>
 
-RingBuffer::RingBuffer() : BufferSize{ RING_DEFAULT_SIZE }
+RingBuffer::RingBuffer() : mBufferSize{ RING_DEFAULT_SIZE }
 {
-    Buffer = new char[BufferSize + 1];
-    Front = 0;
-    Rear = 0;
+	mBuffer = new char[mBufferSize + 1];
+	mFront = 0;
+	mRear = 0;
 }
 
-RingBuffer::RingBuffer(int bufferSize) : BufferSize{ bufferSize }
+RingBuffer::RingBuffer(int bufferSize) : mBufferSize{ bufferSize }
 {
-    Buffer = new char[BufferSize + 1];
-    Front = 0;
-    Rear = 0;
+	mBuffer = new char[mBufferSize + 1];
+	mFront = 0;
+	mRear = 0;
 }
 
 RingBuffer::~RingBuffer()
 {
-    delete[] Buffer;
+	delete[] mBuffer;
 }
 
 int RingBuffer::GetBufferSize()
 {
-    return BufferSize;
+	return mBufferSize;
 }
 
 int RingBuffer::GetUseSize()
 {
-    return (Rear - Front + BufferSize + 1) % (BufferSize + 1);
+	return (mRear - mFront + mBufferSize + 1) % (mBufferSize + 1);
 }
 
 int RingBuffer::GetFreeSize()
 {
-    return BufferSize - GetUseSize();
+	return mBufferSize - GetUseSize();
 }
 
 int RingBuffer::Enqueue(char* src, int size)
 {
-    if (size <= 0 || size > GetFreeSize())
-        return 0;
+	if (size <= 0 || size > GetFreeSize())
+		return 0;
 
-    int firstChunk = std::min(size, BufferSize + 1 - Rear);
-    int secondChunk = size - firstChunk;
+	int firstChunk = std::min(size, mBufferSize + 1 - mRear);
+	int secondChunk = size - firstChunk;
 
-    memcpy(&Buffer[Rear], src, firstChunk);
-    if (secondChunk > 0)
-        memcpy(&Buffer[0], src + firstChunk, secondChunk);
+	::memcpy(&mBuffer[mRear], src, firstChunk);
+	if (secondChunk > 0)
+	{
+		::memcpy(&mBuffer[0], src + firstChunk, secondChunk);
+	}
 
-    Rear = (Rear + size) % (BufferSize + 1);
-    return size;
+	mRear = (mRear + size) % (mBufferSize + 1);
+	return size;
 }
 
 int RingBuffer::Dequeue(char* dest, int size)
 {
-    if (size <= 0 || size > GetUseSize())
-        return 0;
+	if (size <= 0 || size > GetUseSize())
+	{
+		return 0;
+	}
 
-    int firstChunk = std::min(size, BufferSize + 1 - Front);
-    int secondChunk = size - firstChunk;
+	int firstChunk = std::min(size, mBufferSize + 1 - mFront);
+	int secondChunk = size - firstChunk;
 
-    memcpy(dest, &Buffer[Front], firstChunk);
-    if (secondChunk > 0)
-        memcpy(dest + firstChunk, &Buffer[0], secondChunk);
+	::memcpy(dest, &mBuffer[mFront], firstChunk);
+	if (secondChunk > 0)
+	{
+		::memcpy(dest + firstChunk, &mBuffer[0], secondChunk);
+	}
 
-    Front = (Front + size) % (BufferSize + 1);
-    return size;
+	mFront = (mFront + size) % (mBufferSize + 1);
+	return size;
 }
 
 int RingBuffer::Peek(char* dest, int size)
 {
-    if (size <= 0 || size > GetUseSize())
-        return 0;
+	if (size <= 0 || size > GetUseSize())
+		return 0;
 
-    int firstChunk = std::min(size, BufferSize + 1 - Front);
-    int secondChunk = size - firstChunk;
+	int firstChunk = std::min(size, mBufferSize + 1 - mFront);
+	int secondChunk = size - firstChunk;
 
-    memcpy(dest, &Buffer[Front], firstChunk);
-    if (secondChunk > 0)
-        memcpy(dest + firstChunk, &Buffer[0], secondChunk);
+	::memcpy(dest, &mBuffer[mFront], firstChunk);
+	if (secondChunk > 0)
+	{
+		::memcpy(dest + firstChunk, &mBuffer[0], secondChunk);
+	}
 
-    return size;
+	return size;
 }
 
 void RingBuffer::ClearBuffer()
 {
-    Front = Rear;
+	mFront = mRear;
 }
 
 int RingBuffer::DirectEnqueueSize()
 {
-    if (Rear >= Front)
-        return BufferSize + 1 - Rear;
-    else
-        return Front - Rear - 1;
+	if (mRear >= mFront)
+	{
+		return mBufferSize + 1 - mRear;
+	}
+	
+	return mFront - mRear - 1;
 }
 
 int RingBuffer::DirectDequeueSize()
 {
-    if (Front <= Rear)
-        return Rear - Front;
-    else
-        return BufferSize + 1 - Front;
+	if (mFront <= mRear)
+	{
+		return mRear - mFront;
+	}
+	
+	return mBufferSize + 1 - mFront;
 }
 
 int RingBuffer::MoveRear(int size)
 {
-    if (size <= 0 || size > GetFreeSize())
-        return 0;
+	if (size <= 0 || size > GetFreeSize())
+	{
+		return 0;
+	}
 
-    Rear = (Rear + size) % (BufferSize + 1);
-    return size;
+	mRear = (mRear + size) % (mBufferSize + 1);
+	return size;
 }
 
 int RingBuffer::MoveFront(int size)
 {
-    if (size <= 0 || size > GetUseSize())
-        return 0;
+	if (size <= 0 || size > GetUseSize())
+	{
+		return 0;
+	}
 
-    Front = (Front + size) % (BufferSize + 1);
-    return size;
+	mFront = (mFront + size) % (mBufferSize + 1);
+	return size;
 }
 
 char* RingBuffer::GetFrontBufferPtr()
 {
-    return &Buffer[Front];
+	return &mBuffer[mFront];
 }
 
 char* RingBuffer::GetRearBufferPtr()
 {
-    return &Buffer[Rear];
+	return &mBuffer[mRear];
 }
 
 char* RingBuffer::GetStartBufferPtr()
 {
-    return Buffer;
+	return mBuffer;
 }

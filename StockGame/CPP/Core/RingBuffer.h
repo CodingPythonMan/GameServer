@@ -2,7 +2,8 @@
 
 #define RING_DEFAULT_SIZE 10000
 
-class RingBuffer {
+class RingBuffer 
+{
 public:
 	RingBuffer();
 	RingBuffer(int bufferSize);
@@ -49,9 +50,9 @@ public:
 	char* GetStartBufferPtr();
 
 private:
-	int Front;
-	int Rear;
-	int BufferSize;
+	int mFront;
+	int mRear;
+	int mBufferSize;
 
-	char* Buffer;
+	char* mBuffer;
 };

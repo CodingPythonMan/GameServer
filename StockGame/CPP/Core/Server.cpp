@@ -48,10 +48,23 @@ void Server::Update()
 	ULONG_PTR key = 0;
 	IocpEvent* iocpEvent = nullptr;
 
-	if (::GetQueuedCompletionStatus(mIocp, OUT &numOfBytes, OUT &key, OUT reinterpret_cast<LPOVERLAPPED*>(&iocpEvent), INFINITE))
+	if (true == ::GetQueuedCompletionStatus(mIocp, OUT &numOfBytes, OUT &key, OUT reinterpret_cast<LPOVERLAPPED*>(&iocpEvent), INFINITE))
 	{
-		Server* server = static_cast<Server*>(iocpEvent->mOwner);
-		server->_Accept(iocpEvent, numOfBytes);
+		_Accept(iocpEvent, numOfBytes);
+	}
+	else
+	{
+		INT32 errCode = ::WSAGetLastError();
+		switch (errCode)
+		{
+		case WAIT_TIMEOUT:
+			break;
+		default:
+			// 현재는 다양한 경우가 이 경우로 들어오지만, 몇가지 소켓 오류 시 걸러내야한다.
+			Session* session = static_cast<Session*>(iocpEvent->mOwner);
+			//session->Dispatch(iocpEvent, numOfBytes);
+			break;
+		}
 	}
 }
 
@@ -117,5 +130,7 @@ void Server::_RegisterAccept(std::shared_ptr<AcceptEvent> acceptEvent)
 
 void Server::_Accept(IocpEvent* iocpEvent, INT32 numOfBytes)
 {
-	
+	ASSERT_CRASH(iocpEvent->mEventType == EventType::ACCEPT);
+	AcceptEvent* acceptEvent = static_cast<AcceptEvent*>(iocpEvent);
+	ProcessAccept(acceptEvent);
 }
