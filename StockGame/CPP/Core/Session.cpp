@@ -11,3 +11,18 @@ Session::Session()
 void Session::Reset()
 {
 }
+
+void Session::SetClientSocket(SOCKADDR_IN address)
+{
+	mAddress = address;
+}
+
+void Session::ProcessConnect()
+{
+	mIsConnected.store(true);
+
+	// Session 수를 관리하는 곳이 어디인가?
+
+
+	OnConnected();
+}

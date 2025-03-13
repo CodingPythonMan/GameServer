@@ -27,7 +27,7 @@ private:
 	void	_SetBaseSocketOption(bool nagle);
 	void	_Bind(const WCHAR ip[], int port);
 	void	_Listen();
-	void	_RegisterAccept(std::shared_ptr<AcceptEvent> acceptEvent);
+	void	_RegisterAccept(AcceptEvent* acceptEvent);
 	void	_Accept(IocpEvent* iocpEvent, INT32 numOfBytes);
 
 private:

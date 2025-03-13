@@ -27,13 +27,13 @@ void Server::Start(const WCHAR ip[], int port, bool nagle)
 	_Listen();
 
 	// accept 하는 스레드를 따로 뗄 것인가.
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		auto acceptEvent = IocpEventPool::GetInstance().Alloc<AcceptEvent>();
 		acceptEvent->mOwner = this;
 		acceptEvent->mEventType = EventType::ACCEPT;
 		mAcceptEventList.push_back(acceptEvent);
-		_RegisterAccept(acceptEvent);
+		_RegisterAccept(acceptEvent.get());
 	}
 }
 
@@ -94,7 +94,7 @@ void Server::_Bind(const WCHAR ip[], int port)
 	SOCKADDR_IN listenAddr;
 	::memset(&listenAddr, 0, sizeof(listenAddr));
 	listenAddr.sin_family = AF_INET;
-	InetPton(AF_INET, ip, &listenAddr.sin_addr);
+	::InetPton(AF_INET, ip, &listenAddr.sin_addr);
 	listenAddr.sin_port = htons(port);
 	int retval = ::bind(mListenSocket, (SOCKADDR*)&listenAddr, sizeof(listenAddr));
 
@@ -107,11 +107,13 @@ void Server::_Listen()
 	ASSERT_CRASH(retval != SOCKET_ERROR);
 }
 
-void Server::_RegisterAccept(std::shared_ptr<AcceptEvent> acceptEvent)
+void Server::_RegisterAccept(AcceptEvent* acceptEvent)
 {
 	// Session 을 생성해야 한다.
 	auto session = SessionPool::GetInstance().Alloc();
+	// 이것이 일어날 때, Session 을 관리해주는 곳과 IOCP 연결이 필요하다.
 	
+
 	acceptEvent->Reset();
 	acceptEvent->mSession = session;
 
@@ -132,5 +134,17 @@ void Server::_Accept(IocpEvent* iocpEvent, INT32 numOfBytes)
 {
 	ASSERT_CRASH(iocpEvent->mEventType == EventType::ACCEPT);
 	AcceptEvent* acceptEvent = static_cast<AcceptEvent*>(iocpEvent);
-	ProcessAccept(acceptEvent);
+	std::shared_ptr<Session> session = acceptEvent->mSession;
+
+	SOCKADDR_IN sockAddress;
+	INT32 sizeOfSockAddr = sizeof(sockAddress);
+	if (SOCKET_ERROR == ::getpeername(session->mClientSocket, OUT reinterpret_cast<SOCKADDR*>(&sockAddress), &sizeOfSockAddr))
+	{
+		_RegisterAccept(acceptEvent);
+		return;
+	}
+
+	session->SetClientSocket(sockAddress);
+	session->ProcessConnect();
+	_RegisterAccept(acceptEvent);
 }

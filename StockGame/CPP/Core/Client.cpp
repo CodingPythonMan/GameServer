@@ -23,7 +23,7 @@ void Client::_Connect(const WCHAR ip[], int port, bool nagle)
 	SOCKADDR_IN serverAddr;
 	memset(&serverAddr, 0, sizeof(serverAddr));
 	serverAddr.sin_family = AF_INET;
-	InetPton(AF_INET, ip, &serverAddr.sin_addr);
+	::InetPton(AF_INET, ip, &serverAddr.sin_addr);
 	serverAddr.sin_port = htons(port);
 	int retval = connect(mSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr));
 	ASSERT_CRASH(retval != SOCKET_ERROR);
