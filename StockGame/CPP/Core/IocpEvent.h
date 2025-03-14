@@ -1,63 +1,85 @@
 #pragma once
-#include <windows.h>
-#include <memory>
+#include "IocpObject.h"
 #include <vector>
 
-class IocpRegistrable;
 class Session;
 
 enum class EventType : UINT8
 {
-	CONNECT,
-	DISCONNECT,
-	ACCEPT,
-	RECV,
-	SEND,
+	Connect,
+	Disconnect,
+	Accept,
+	Recv,
+	Send
 };
+
+/*---------------
+	IocpEvent
+---------------*/
 
 class IocpEvent : public OVERLAPPED
 {
 public:
 	IocpEvent(EventType type);
 
-	void		Reset();
+	void			Initialize();
 
 public:
-	EventType			mEventType;
-	IocpRegistrable*	mOwner;
+	EventType		eventType;
+	std::shared_ptr<IocpObject>	owner;
 };
+
+/*---------------
+	ConnectEvent
+---------------*/
 
 class ConnectEvent : public IocpEvent
 {
 public:
-	ConnectEvent() : IocpEvent(EventType::CONNECT) {}
+	ConnectEvent() : IocpEvent(EventType::Connect) {}
 };
+
+/*---------------
+	DisconnectEvent
+---------------*/
 
 class DisconnectEvent : public IocpEvent
 {
 public:
-	DisconnectEvent() : IocpEvent(EventType::DISCONNECT) {}
+	DisconnectEvent() : IocpEvent(EventType::Disconnect) {}
 };
+
+/*---------------
+	AcceptEvent
+---------------*/
 
 class AcceptEvent : public IocpEvent
 {
 public:
-	AcceptEvent() : IocpEvent(EventType::ACCEPT) {}
+	AcceptEvent() : IocpEvent(EventType::Accept) {}
 
 public:
 	std::shared_ptr<Session>	mSession = nullptr;
 };
 
+/*---------------
+	RecvEvent
+---------------*/
+
 class RecvEvent : public IocpEvent
 {
 public:
-	RecvEvent() : IocpEvent(EventType::RECV) {}
+	RecvEvent() : IocpEvent(EventType::Recv) {}
 };
+
+/*---------------
+	SendEvent
+---------------*/
 
 class SendEvent : public IocpEvent
 {
 public:
-	SendEvent() : IocpEvent(EventType::SEND) {}
+	SendEvent() : IocpEvent(EventType::Send) {}
 
-	//std::vector<>;
+	std::vector<std::shared_ptr<SendBuffer>> sendBuffers;
 };

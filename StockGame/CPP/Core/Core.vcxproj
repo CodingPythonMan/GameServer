@@ -19,29 +19,33 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Client.h" />
+    <ClInclude Include="MemoryPool.h" />
+    <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="PoolAllocator.h" />
+    <ClInclude Include="IocpCore.h" />
     <ClInclude Include="IocpEvent.h" />
-    <ClInclude Include="IocpEventPool.h" />
+    <ClInclude Include="IocpObject.h" />
+    <ClInclude Include="Listener.h" />
     <ClInclude Include="Macro.h" />
-    <ClInclude Include="IocpRegistrable.h" />
+    <ClInclude Include="MemoryManager.h" />
+    <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="RefSingleton.h" />
-    <ClInclude Include="RingBuffer.h" />
-    <ClInclude Include="Server.h" />
+    <ClInclude Include="SendBuffer.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="Session.h" />
-    <ClInclude Include="SessionPool.h" />
-    <ClInclude Include="SmartObject.h" />
-    <ClInclude Include="SmartObjectPool.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="MemoryPool.cpp" />
+    <ClCompile Include="PoolAllocator.cpp" />
+    <ClCompile Include="IocpCore.cpp" />
     <ClCompile Include="IocpEvent.cpp" />
-    <ClCompile Include="RingBuffer.cpp" />
-    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="Listener.cpp" />
+    <ClCompile Include="MemoryManager.cpp" />
+    <ClCompile Include="RecvBuffer.cpp" />
+    <ClCompile Include="SendBuffer.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Session.cpp" />
-    <ClCompile Include="SmartObject.cpp" />
-    <ClCompile Include="SmartObjectPool.cpp" />
+    <ClCompile Include="STLAllocator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
