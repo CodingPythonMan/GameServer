@@ -1,14 +1,16 @@
 #pragma once
-#include "IocpObject.h"
+#include <windows.h>
 #include <vector>
+#include "Types.h"
 
 class Session;
 
-enum class EventType : UINT8
+enum class EventType : uint8
 {
 	Connect,
 	Disconnect,
 	Accept,
+	//PreRecv, 0 byte receive 고오급 기법
 	Recv,
 	Send
 };
@@ -22,11 +24,11 @@ class IocpEvent : public OVERLAPPED
 public:
 	IocpEvent(EventType type);
 
-	void			Initialize();
+	void			Init();
 
 public:
 	EventType		eventType;
-	std::shared_ptr<IocpObject>	owner;
+	IocpObjectRef	owner;
 };
 
 /*---------------
@@ -59,7 +61,7 @@ public:
 	AcceptEvent() : IocpEvent(EventType::Accept) {}
 
 public:
-	std::shared_ptr<Session>	mSession = nullptr;
+	SessionRef	session = nullptr;
 };
 
 /*---------------
@@ -81,5 +83,5 @@ class SendEvent : public IocpEvent
 public:
 	SendEvent() : IocpEvent(EventType::Send) {}
 
-	std::vector<std::shared_ptr<SendBuffer>> sendBuffers;
+	std::vector<SendBufferRef> sendBuffers;
 };

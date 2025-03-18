@@ -1,25 +1,27 @@
 #pragma once
-#include <windows.h>
-#include <memory>
+#include "Types.h"
+#include "Macro.h"
+#include <vector>
+#include <array>
 
 class SendBufferChunk;
 
 class SendBuffer
 {
 public:
-	SendBuffer(std::shared_ptr<SendBufferChunk> owner, BYTE* buffer, UINT32 allocSize);
+	SendBuffer(SendBufferChunkRef owner, BYTE* buffer, uint32 allocSize);
 	~SendBuffer();
 
-	BYTE*			Buffer() { return mBuffer; }
-	UINT32			AllocSize() { return mAllocSize; }
-	UINT32			WriteSize() { return mWriteSize; }
-	void			Close(UINT32 writeSize);
+	BYTE*			Buffer() { return _buffer; }
+	uint32			AllocSize() { return _allocSize; }
+	uint32			WriteSize() { return _writeSize; }
+	void			Close(uint32 writeSize);
 
 private:
-	BYTE*				mBuffer;
-	UINT32				mAllocSize = 0;
-	UINT32				mWriteSize = 0;
-	std::shared_ptr<SendBufferChunk> mOwner;
+	BYTE*				_buffer;
+	uint32				_allocSize = 0;
+	uint32				_writeSize = 0;
+	SendBufferChunkRef	_owner;
 };
 
 class SendBufferChunk : public std::enable_shared_from_this<SendBufferChunk>
@@ -34,22 +36,18 @@ public:
 	~SendBufferChunk();
 
 	void			Reset();
-	std::shared_ptr<SendBuffer>	Open(UINT32 allocSize);
-	void			Close(UINT32 writeSize);
+	SendBufferRef	Open(uint32 allocSize);
+	void			Close(uint32 writeSize);
 
-	bool			IsOpen() { return mOpen; }
-	BYTE*			Buffer() { return &_buffer[_usedSize]; }
-	UINT32			FreeSize() { return static_cast<UINT32>(_buffer.size()) - _usedSize; }
+	bool			IsOpen() { return _open; }
+	BYTE*			Buffer() { return &mBuffer[_usedSize]; }
+	uint32			FreeSize() { return static_cast<uint32>(mBuffer.size()) - _usedSize; }
 
 private:
-	std::array<BYTE, SEND_BUFFER_CHUNK_SIZE>	mBuffer = {};
-	bool										mOpen = false;
-	UINT32										mUsedSize = 0;
+	std::array<BYTE, SEND_BUFFER_CHUNK_SIZE>		mBuffer = {};
+	bool									_open = false;
+	uint32									_usedSize = 0;
 };
-
-/*-----------------------
-	SendBufferManager
-------------------------*/
 
 class SendBufferManager
 {
@@ -64,5 +62,5 @@ private:
 
 private:
 	USE_LOCK;
-	Vector<SendBufferChunkRef> _sendBufferChunks;
+	std::vector<SendBufferChunkRef> _sendBufferChunks;
 };

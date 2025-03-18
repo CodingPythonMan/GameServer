@@ -2,10 +2,10 @@
 
 IocpEvent::IocpEvent(EventType type) : eventType(type)
 {
-	Initialize();
+	Init();
 }
 
-void IocpEvent::Initialize()
+void IocpEvent::Init()
 {
 	OVERLAPPED::hEvent = 0;
 	OVERLAPPED::Internal = 0;

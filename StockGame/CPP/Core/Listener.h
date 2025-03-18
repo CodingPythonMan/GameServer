@@ -1,13 +1,10 @@
 #pragma once
-#include "IocpCore.h"
+#include <vector>
 #include "NetAddress.h"
+#include "IocpCore.h"
 
 class AcceptEvent;
 class ServerService;
-
-/*-----------------
-		Listener
-------------------*/
 
 class Listener : public IocpObject
 {
@@ -32,6 +29,6 @@ private:
 
 protected:
 	SOCKET _socket = INVALID_SOCKET;
-	Vector<AcceptEvent*> _acceptEvents;
+	std::vector<AcceptEvent*> _acceptEvents;
 	ServerServiceRef _service;
 };

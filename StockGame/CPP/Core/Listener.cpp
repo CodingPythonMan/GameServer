@@ -1,13 +1,10 @@
-#include "pch.h"
 #include "Listener.h"
 #include "SocketUtils.h"
 #include "IocpEvent.h"
 #include "Session.h"
 #include "Service.h"
-
-/*-----------------
-		Listener
-------------------*/
+#include "Macro.h"
+#include "Memory.h"
 
 Listener::~Listener()
 {
@@ -15,8 +12,6 @@ Listener::~Listener()
 
 	for (AcceptEvent* acceptEvent : _acceptEvents)
 	{
-
-
 		xdelete(acceptEvent);
 	}
 }

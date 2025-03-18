@@ -1,11 +1,9 @@
-#include "pch.h"
 #include "Session.h"
 #include "SocketUtils.h"
 #include "Service.h"
-
-/*-----------------
-		Session
-------------------*/
+#include "CoreGlobal.h"
+#include "ConsoleLog.h"
+#include "SendBuffer.h"
 
 Session::Session() : _recvBuffer(BUFFER_SIZE)
 {
@@ -47,7 +45,7 @@ void Session::Disconnect(const WCHAR* cause)
 	if (_connected.exchange(false) == false)
 		return;
 
-	wcout << "Disconnect : " << cause << endl;
+	GConsoleLogger->WriteStdOut(Color::WHITE, L"Disconnect : %d\n", cause);
 
 	RegisterDisconnect();
 }
@@ -180,7 +178,7 @@ void Session::RegisterSend()
 	}
 
 	// Scatter-Gather(흩어져있는 데이터들을 모아서 한방에 보낸다.)
-	Vector<WSABUF> wsaBufs;
+	std::vector<WSABUF> wsaBufs;
 	wsaBufs.reserve(_sendEvent.sendBuffers.size());
 	for (SendBufferRef sendBuffer : _sendEvent.sendBuffers)
 	{
@@ -289,7 +287,7 @@ void Session::HandleError(int32 errorCode)
 		Disconnect(L"Handle Error");
 		break;
 	default:
-		cout << "Handle Error : " << errorCode << endl;
+		GConsoleLogger->WriteStdOut(Color::WHITE, L"Handle Error : %d\n", errorCode);
 		break;
 	}
 }

@@ -1,14 +1,11 @@
-#include "Server.h"
+#include "Service.h"
+#include "Memory.h"
 
 int main()
 {
-	auto server = std::make_shared<Server>();
-	server->Start(L"127.0.0.1", 1231);
-
-	while (1)
-	{
-		// 우선 메인 스레드에서만 Accept 를 받는 업무를 진행해보자.
-		server->Update();
-		Sleep(300);
-	}
+	/*ServerServiceRef service = MakeShared<ServerService>(
+		NetAddress(L"127.0.0.1", 1357),
+		MakeShared<IocpCore>(),
+		MakeShared<GameSession>,
+		100);*/
 }

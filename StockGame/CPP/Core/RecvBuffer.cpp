@@ -1,6 +1,6 @@
 #include "RecvBuffer.h"
 
-RecvBuffer::RecvBuffer(INT32 bufferSize) : mBufferSize(bufferSize)
+RecvBuffer::RecvBuffer(int32 bufferSize) : mBufferSize(bufferSize)
 {
 	mCapacity = bufferSize * BUFFER_COUNT;
 	mBuffer.resize(bufferSize);
@@ -12,7 +12,7 @@ RecvBuffer::~RecvBuffer()
 
 void RecvBuffer::Clean()
 {
-	INT32 dataSize = DataSize();
+	int32 dataSize = DataSize();
 	if (dataSize == 0)
 	{
 		// 마침 읽기*쓰기 커서가 동일한 위치라면, 둘다 리셋
@@ -30,7 +30,7 @@ void RecvBuffer::Clean()
 	}
 }
 
-bool RecvBuffer::OnRead(INT32 numOfBytes)
+bool RecvBuffer::OnRead(int32 numOfBytes)
 {
 	if (numOfBytes > DataSize())
 		return false;
@@ -39,7 +39,7 @@ bool RecvBuffer::OnRead(INT32 numOfBytes)
 	return true;
 }
 
-bool RecvBuffer::OnWrite(INT32 numOfBytes)
+bool RecvBuffer::OnWrite(int32 numOfBytes)
 {
 	if (numOfBytes > FreeSize())
 		return false;

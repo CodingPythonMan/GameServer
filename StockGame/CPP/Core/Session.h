@@ -1,14 +1,12 @@
 #pragma once
+#include <queue>
+#include "NetAddress.h"
 #include "IocpCore.h"
 #include "IocpEvent.h"
-#include "NetAddress.h"
 #include "RecvBuffer.h"
+#include "Macro.h"
 
 class Service;
-
-/*-----------------
-		Session
-------------------*/
 
 class Session : public IocpObject
 {
@@ -31,8 +29,8 @@ public:
 	bool				Connect();
 	void				Disconnect(const WCHAR* cause);
 
-	shared_ptr<Service>	GetService() { return _service.lock(); }
-	void				SetService(shared_ptr<Service> service) { _service = service; }
+	std::shared_ptr<Service>	GetService() { return _service.lock(); }
+	void						SetService(std::shared_ptr<Service> service) { _service = service; }
 
 public:
 						/* 정보 관련 */
@@ -69,10 +67,10 @@ protected:
 	virtual void		OnDisconnected() {}
 
 private:
-	weak_ptr<Service>	_service;
+	std::weak_ptr<Service>	_service;
 	SOCKET				_socket = INVALID_SOCKET;
 	NetAddress			_netAddress = {};
-	Atomic<bool>		_connected = false;
+	std::atomic<bool>		_connected = false;
 
 private:
 	USE_LOCK;
@@ -81,8 +79,8 @@ private:
 	RecvBuffer			_recvBuffer;
 	
 						/* 송신 관련 */
-	Queue<SendBufferRef>_sendQueue;
-	Atomic<bool>		_sendRegistered = false;
+	std::queue<SendBufferRef>_sendQueue;
+	std::atomic<bool>		_sendRegistered = false;
 
 private:
 						/* IocpEvent 재사용*/

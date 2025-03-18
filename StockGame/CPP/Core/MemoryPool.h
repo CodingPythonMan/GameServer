@@ -1,6 +1,6 @@
 #pragma once
 #include <windows.h>
-#include <atomic>
+#include "Types.h"
 
 enum
 {
@@ -11,11 +11,11 @@ DECLSPEC_ALIGN(SLIST_ALIGNMENT)
 struct MemoryHeader : public SLIST_ENTRY
 {
 	// [MemoryHeader][Data]
-	MemoryHeader(int size) : allocSize(size) {}
+	MemoryHeader(int32 size) : allocSize(size) {}
 
-	static void* AttachHeader(MemoryHeader* header, int size)
+	static void* AttachHeader(MemoryHeader* header, int32 size)
 	{
-		new	(header)MemoryHeader(size); // placement new
+		new(header)MemoryHeader(size); // placement new
 		return reinterpret_cast<void*>(++header);
 	}
 
@@ -25,22 +25,22 @@ struct MemoryHeader : public SLIST_ENTRY
 		return header;
 	}
 
-	int allocSize;
+	int32 allocSize;
 };
 
 DECLSPEC_ALIGN(SLIST_ALIGNMENT)
 class MemoryPool
 {
 public:
-	MemoryPool(int allocSize);
+	MemoryPool(int32 allocSize);
 	~MemoryPool();
 
 	void			Push(MemoryHeader* ptr);
 	MemoryHeader*	Pop();
 
 private:
-	SLIST_HEADER		mHeader;
-	int					mAllocSize = 0;
-	std::atomic<int>	mUseCount = 0;
-	std::atomic<int>	mReserveCount = 0;
+	SLIST_HEADER		_header;
+	int32				_allocSize = 0;
+	std::atomic<int32>	_useCount = 0;
+	std::atomic<int32>	_reserveCount = 0;
 };

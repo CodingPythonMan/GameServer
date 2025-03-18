@@ -1,20 +1,20 @@
-#include "MemoryManager.h"
+#include "Memory.h"
 #include "MemoryPool.h"
 #include "Macro.h"
 
-MemoryManager::MemoryManager()
+Memory::Memory()
 {
-	int size = 0;
-	int tableIndex = 0;
+	int32 size = 0;
+	int32 tableIndex = 0;
 
 	for (size = 32; size <= 1024; size += 32)
 	{
 		MemoryPool* pool = new MemoryPool(size);
-		mPools.push_back(pool);
+		_pools.push_back(pool);
 
 		while (tableIndex <= size)
 		{
-			mPoolTable[tableIndex] = pool;
+			_poolTable[tableIndex] = pool;
 			tableIndex++;
 		}
 	}
@@ -22,11 +22,11 @@ MemoryManager::MemoryManager()
 	for (; size <= 2048; size += 128)
 	{
 		MemoryPool* pool = new MemoryPool(size);
-		mPools.push_back(pool);
+		_pools.push_back(pool);
 
 		while (tableIndex <= size)
 		{
-			mPoolTable[tableIndex] = pool;
+			_poolTable[tableIndex] = pool;
 			tableIndex++;
 		}
 	}
@@ -34,31 +34,28 @@ MemoryManager::MemoryManager()
 	for (; size <= 4096; size += 256)
 	{
 		MemoryPool* pool = new MemoryPool(size);
-		mPools.push_back(pool);
+		_pools.push_back(pool);
 
 		while (tableIndex <= size)
 		{
-			mPoolTable[tableIndex] = pool;
+			_poolTable[tableIndex] = pool;
 			tableIndex++;
 		}
 	}
 }
 
-MemoryManager::~MemoryManager()
+Memory::~Memory()
 {
-	for (MemoryPool* pool : mPools)
-	{
+	for (MemoryPool* pool : _pools)
 		delete pool;
-	}
 
-	mPools.clear();
+	_pools.clear();
 }
 
-void* MemoryManager::Allocate(int size)
+void* Memory::Allocate(int32 size)
 {
 	MemoryHeader* header = nullptr;
-	const auto allocSize = size * sizeof(MemoryHeader);
-
+	const int32 allocSize = size * sizeof(MemoryHeader);
 	if (allocSize > MAX_ALLOC_SIZE)
 	{
 		// 메모리 풀링 최대 크기를 벗어나면 일반 할당
@@ -67,17 +64,17 @@ void* MemoryManager::Allocate(int size)
 	else
 	{
 		// 메모리 풀에서 꺼내온다.
-		header = mPoolTable[allocSize]->Pop();
+		header = _poolTable[allocSize]->Pop();
 	}
 
 	return MemoryHeader::AttachHeader(header, allocSize);
 }
 
-void MemoryManager::Release(void* ptr)
+void Memory::Release(void* ptr)
 {
 	MemoryHeader* header = MemoryHeader::DetachHeader(ptr);
 
-	const int allocSize = header->allocSize;
+	const int32 allocSize = header->allocSize;
 	ASSERT_CRASH(allocSize > 0);
 
 	if (allocSize > MAX_ALLOC_SIZE)
@@ -88,6 +85,6 @@ void MemoryManager::Release(void* ptr)
 	else
 	{
 		// 메모리 풀에 반납한다.
-		mPoolTable[allocSize]->Push(header);
+		_poolTable[allocSize]->Push(header);
 	}
 }

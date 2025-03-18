@@ -1,5 +1,5 @@
 #pragma once
-#include <windows.h>
+#include "Types.h"
 #include "MemoryPool.h"
 
 template<typename Type>
@@ -9,8 +9,8 @@ public:
 	template<typename... Args>
 	static Type* Pop(Args&&... args)
 	{
-		Type* memory = static_cast<Type*>(MemoryHeader::AttachHeader(s_pool.Pop(), s_allocSize));
-
+		Type* memory = static_cast<Type*>(MemoryHeader::AttachHeader(mPool.Pop(), mAllocSize));
+		
 		new(memory)Type(std::forward<Args>(args)...);// placement new
 		return memory;
 	}
@@ -18,24 +18,23 @@ public:
 	static void Push(Type* obj)
 	{
 		obj->~Type();
-		s_pool.Push(MemoryHeader::DetachHeader(obj));
+		mPool.Push(MemoryHeader::DetachHeader(obj));
 	}
 
-
 	template<typename... Args>
-	static shared_ptr<Type> MakeShared(Args&&... args)
+	static std::shared_ptr<Type> MakeShared(Args&&... args)
 	{
-		shared_ptr<Type> ptr = { Pop(std::forward<Args>(args)...), Push };
+		std::shared_ptr<Type> ptr = { Pop(std::forward<Args>(args)...), Push };
 		return ptr;
 	}
 
 private:
-	static INT32			s_allocSize;
-	static MemoryPool		s_pool;
+	static int32			mAllocSize;
+	static MemoryPool		mPool;
 };
 
 template<typename Type>
-INT32 ObjectPool<Type>::sAllocSize = sizeof(Type) * sizeof(MemoryHeader);
+int32 ObjectPool<Type>::mAllocSize = sizeof(Type) * sizeof(MemoryHeader);
 
 template<typename Type>
-MemoryPool ObjectPool<Type>::sPool{ s_allocSize };
+MemoryPool ObjectPool<Type>::mPool{ mAllocSize };

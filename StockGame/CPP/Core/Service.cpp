@@ -1,11 +1,7 @@
-#include "pch.h"
 #include "Service.h"
 #include "Session.h"
 #include "Listener.h"
-
-/*--------------------
-		Service
----------------------*/
+#include "Memory.h"
 
 Service::Service(ServiceType type, NetAddress address, IocpCoreRef core, SessionFactory factory, int32 maxSessioncount)
 	:_type(type), _netAddress(address), _iocpCore(core), _sessionFactory(factory), _maxSessionCount(maxSessioncount)

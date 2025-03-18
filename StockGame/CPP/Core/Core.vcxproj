@@ -19,33 +19,52 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MemoryPool.h" />
-    <ClInclude Include="ObjectPool.h" />
-    <ClInclude Include="PoolAllocator.h" />
+    <ClInclude Include="Allocator.h" />
+    <ClInclude Include="ConsoleLog.h" />
+    <ClInclude Include="CoreGlobal.h" />
+    <ClInclude Include="Lock.h" />
+    <ClInclude Include="BlockingQueue.h" />
+    <ClInclude Include="Macro.h" />
+    <ClInclude Include="CoreTLS.h" />
+    <ClInclude Include="GlobalQueue.h" />
     <ClInclude Include="IocpCore.h" />
     <ClInclude Include="IocpEvent.h" />
     <ClInclude Include="IocpObject.h" />
+    <ClInclude Include="Job.h" />
+    <ClInclude Include="JobQueue.h" />
+    <ClInclude Include="JobTimer.h" />
     <ClInclude Include="Listener.h" />
-    <ClInclude Include="Macro.h" />
-    <ClInclude Include="MemoryManager.h" />
+    <ClInclude Include="Memory.h" />
+    <ClInclude Include="MemoryPool.h" />
+    <ClInclude Include="NetAddress.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="RecvBuffer.h" />
-    <ClInclude Include="RefSingleton.h" />
     <ClInclude Include="SendBuffer.h" />
     <ClInclude Include="Service.h" />
     <ClInclude Include="Session.h" />
+    <ClInclude Include="ThreadManager.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MemoryPool.cpp" />
-    <ClCompile Include="PoolAllocator.cpp" />
+    <ClCompile Include="Allocator.cpp" />
+    <ClCompile Include="ConsoleLog.cpp" />
+    <ClCompile Include="CoreGlobal.cpp" />
+    <ClCompile Include="CoreTLS.cpp" />
+    <ClCompile Include="GlobalQueue.cpp" />
     <ClCompile Include="IocpCore.cpp" />
     <ClCompile Include="IocpEvent.cpp" />
+    <ClCompile Include="JobQueue.cpp" />
+    <ClCompile Include="JobTimer.cpp" />
     <ClCompile Include="Listener.cpp" />
-    <ClCompile Include="MemoryManager.cpp" />
+    <ClCompile Include="Lock.cpp" />
+    <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="MemoryPool.cpp" />
+    <ClCompile Include="NetAddress.cpp" />
     <ClCompile Include="RecvBuffer.cpp" />
     <ClCompile Include="SendBuffer.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Session.cpp" />
-    <ClCompile Include="STLAllocator.h" />
+    <ClCompile Include="ThreadManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

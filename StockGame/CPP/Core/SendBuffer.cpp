@@ -1,26 +1,26 @@
 #include "SendBuffer.h"
-#include "Macro.h"
 #include "ObjectPool.h"
+#include "CoreTLS.h"
+#include "CoreGlobal.h"
+#include "Memory.h"
+#include "ConsoleLog.h"
 
-SendBuffer::SendBuffer(std::shared_ptr<SendBufferChunk> owner, BYTE* buffer, UINT32 allocSize)
-	: mOwner(owner), mBuffer(buffer), mAllocSize(allocSize)
+SendBuffer::SendBuffer(SendBufferChunkRef owner, BYTE* buffer, uint32 allocSize)
+	: _owner(owner), _buffer(buffer), _allocSize(allocSize)
 {
+
 }
 
 SendBuffer::~SendBuffer()
 {
 }
 
-void SendBuffer::Close(UINT32 writeSize)
+void SendBuffer::Close(uint32 writeSize)
 {
-	ASSERT_CRASH(mAllocSize >= writeSize);
-	mWriteSize = writeSize;
-	mOwner->Close(writeSize);
+	ASSERT_CRASH(_allocSize >= writeSize);
+	_writeSize = writeSize;
+	_owner->Close(writeSize);
 }
-
-/*-----------------------
-	SendBufferChunk
-------------------------*/
 
 SendBufferChunk::SendBufferChunk()
 {
@@ -32,35 +32,29 @@ SendBufferChunk::~SendBufferChunk()
 
 void SendBufferChunk::Reset()
 {
-	mOpen = false;
-	mUsedSize = 0;
+	_open = false;
+	_usedSize = 0;
 }
 
-std::shared_ptr<SendBuffer> SendBufferChunk::Open(UINT32 allocSize)
+SendBufferRef SendBufferChunk::Open(uint32 allocSize)
 {
 	ASSERT_CRASH(allocSize <= SEND_BUFFER_CHUNK_SIZE);
-	ASSERT_CRASH(mOpen == false);
+	ASSERT_CRASH(_open == false);
 
 	if (allocSize > FreeSize())
-	{
 		return nullptr;
-	}
 
-	mOpen = true;
+	_open = true;
 
-	return ObjectPool<SendBuffer>::MakeShared(std::shared_from_this(), Buffer(), allocSize);
+	return ObjectPool<SendBuffer>::MakeShared(shared_from_this(), Buffer(), allocSize);
 }
 
-void SendBufferChunk::Close(UINT32 writeSize)
+void SendBufferChunk::Close(uint32 writeSize)
 {
 	ASSERT_CRASH(_open == true);
 	_open = false;
 	_usedSize += writeSize;
 }
-
-/*-----------------------
-	SendBufferManager
-------------------------*/
 
 SendBufferRef SendBufferManager::Open(uint32 size)
 {
@@ -105,6 +99,6 @@ void SendBufferManager::Push(SendBufferChunkRef buffer)
 
 void SendBufferManager::PushGlobal(SendBufferChunk* buffer)
 {
-	cout << "PushGlobal SENDBUFFERCHUNK" << endl;
+	GConsoleLogger->WriteStdOut(Color::GREEN, L"PushGlobal SENDBUFFERCHUNK");
 	GSendBufferManager->Push(SendBufferChunkRef(buffer, PushGlobal));
 }
