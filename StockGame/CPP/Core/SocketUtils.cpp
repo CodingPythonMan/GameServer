@@ -1,5 +1,5 @@
-#include "pch.h"
 #include "SocketUtils.h"
+#include "Macro.h"
 
 LPFN_CONNECTEX		SocketUtils::ConnectEx = nullptr;
 LPFN_DISCONNECTEX	SocketUtils::DisconnectEx = nullptr;
