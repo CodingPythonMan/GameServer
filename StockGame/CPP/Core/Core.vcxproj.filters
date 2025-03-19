@@ -22,6 +22,9 @@
     <Filter Include="Thread">
       <UniqueIdentifier>{783d4ab2-f52a-4cd1-a2b1-b5634a70fb53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{7290f2e3-3a4c-4e75-9680-1c57df6f3feb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IocpCore.h">
@@ -102,6 +105,12 @@
     <ClInclude Include="SocketUtils.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="DBConnectionInfo.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBService.h">
+      <Filter>DB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IocpCore.cpp">
@@ -163,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="SocketUtils.cpp">
       <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="DBService.cpp">
+      <Filter>DB</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

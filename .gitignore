@@ -331,3 +331,7 @@ ZipDataTables
 
 !libprotobufd.lib
 !libprotobufd.pdb
+
+!PocoDatamd.lib
+!PocoDataODBCmd.lib
+!PocoFoundationmd.lib
