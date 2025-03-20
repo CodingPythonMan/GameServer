@@ -75,15 +75,15 @@ private:
 private:
 	USE_LOCK;
 
-						/* 수신 관련 */
-	RecvBuffer			_recvBuffer;
+						// 수신 관련
+	RecvBuffer			mRecvBuffer;
 	
-						/* 송신 관련 */
+						// 송신 관련
 	std::queue<SendBufferRef>_sendQueue;
 	std::atomic<bool>		_sendRegistered = false;
 
 private:
-						/* IocpEvent 재사용*/
+						// IocpEvent 재사용
 	ConnectEvent		_connectEvent;
 	DisconnectEvent		_disconnectEvent;
 	RecvEvent			_recvEvent;

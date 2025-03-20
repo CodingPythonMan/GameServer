@@ -36,9 +36,8 @@ int main()
 	ASSERT_CRASH(service->Start());
 
 	// 자!!! Poco 를 한번 사용해보자.
-	DBService dbService;
-	dbService.Start();
-
+	//DBService dbService;
+	//dbService.Start();
 
 	for (int32 i = 0; i < 5; i++)
 	{

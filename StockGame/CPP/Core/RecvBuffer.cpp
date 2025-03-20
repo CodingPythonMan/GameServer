@@ -3,7 +3,7 @@
 RecvBuffer::RecvBuffer(int32 bufferSize) : mBufferSize(bufferSize)
 {
 	mCapacity = bufferSize * BUFFER_COUNT;
-	mBuffer.resize(bufferSize);
+	mBuffer.resize(mCapacity);
 }
 
 RecvBuffer::~RecvBuffer()
@@ -12,7 +12,7 @@ RecvBuffer::~RecvBuffer()
 
 void RecvBuffer::Clean()
 {
-	int32 dataSize = DataSize();
+	int32 dataSize = GetDataSize();
 	if (dataSize == 0)
 	{
 		// 마침 읽기*쓰기 커서가 동일한 위치라면, 둘다 리셋
@@ -21,7 +21,7 @@ void RecvBuffer::Clean()
 	else
 	{
 		// 여유 공간이 버퍼 1개 크기 미만이면, 데이터를 앞으로 땡긴다.
-		if (FreeSize() < mBufferSize)
+		if (GetFreeSize() < mBufferSize)
 		{
 			::memcpy(&mBuffer[0], &mBuffer[mReadPos], dataSize);
 			mReadPos = 0;
@@ -32,7 +32,7 @@ void RecvBuffer::Clean()
 
 bool RecvBuffer::OnRead(int32 numOfBytes)
 {
-	if (numOfBytes > DataSize())
+	if (numOfBytes > GetDataSize())
 		return false;
 
 	mReadPos += numOfBytes;
@@ -41,7 +41,7 @@ bool RecvBuffer::OnRead(int32 numOfBytes)
 
 bool RecvBuffer::OnWrite(int32 numOfBytes)
 {
-	if (numOfBytes > FreeSize())
+	if (numOfBytes > GetFreeSize())
 		return false;
 
 	mWritePos += numOfBytes;

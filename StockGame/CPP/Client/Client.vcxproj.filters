@@ -4,21 +4,10 @@
     <Filter Include="Main">
       <UniqueIdentifier>{133c0759-82e7-413b-bf59-1deb1d100120}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chat">
-      <UniqueIdentifier>{18a3d7d8-befa-459f-ae30-c4ab5e8c68a6}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="Chat.cpp">
-      <Filter>Chat</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Chat.h">
-      <Filter>Chat</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,8 +4,9 @@
 #include "CoreGlobal.h"
 #include "ConsoleLog.h"
 #include "SendBuffer.h"
+#include <iostream>
 
-Session::Session() : _recvBuffer(BUFFER_SIZE)
+Session::Session() : mRecvBuffer(BUFFER_SIZE)
 {
 	_socket = SocketUtils::CreateSocket();
 }
@@ -45,7 +46,7 @@ void Session::Disconnect(const WCHAR* cause)
 	if (_connected.exchange(false) == false)
 		return;
 
-	GConsoleLogger->WriteStdOut(Color::WHITE, L"Disconnect : %d\n", cause);
+	GConsoleLogger->WriteStdOut(Color::WHITE, L"Disconnect : %s\n", cause);
 
 	RegisterDisconnect();
 }
@@ -136,8 +137,8 @@ void Session::RegisterRecv()
 	_recvEvent.owner = shared_from_this();
 
 	WSABUF wsaBuf;
-	wsaBuf.buf = reinterpret_cast<char*>(_recvBuffer.WritePos());
-	wsaBuf.len = _recvBuffer.FreeSize();
+	wsaBuf.buf = reinterpret_cast<char*>(mRecvBuffer.GetWritePos());
+	wsaBuf.len = mRecvBuffer.GetFreeSize();
 
 	DWORD numOfBytes = 0;
 	DWORD flags = 0;
@@ -236,22 +237,22 @@ void Session::ProcessRecv(int32 numOfBytes)
 		return;
 	}
 
-	if (_recvBuffer.OnWrite(numOfBytes) == false)
+	if (mRecvBuffer.OnWrite(numOfBytes) == false)
 	{
 		Disconnect(L"OnWrite Overflow");
 		return;
 	}
 
-	int32 dataSize = _recvBuffer.DataSize();
-	int32 processLen = OnRecv(_recvBuffer.ReadPos(), dataSize);
-	if (processLen < 0 || dataSize < processLen || _recvBuffer.OnRead(processLen) == false)
+	int32 dataSize = mRecvBuffer.GetDataSize();
+	int32 processLen = OnRecv(mRecvBuffer.GetReadPos(), dataSize);
+	if (processLen < 0 || dataSize < processLen || mRecvBuffer.OnRead(processLen) == false)
 	{
 		Disconnect(L"OnRead Overflow");
 		return;
 	}
 
 	// 커서 정리
-	_recvBuffer.Clean();
+	mRecvBuffer.Clean();
 	 
 	// 수신 등록
 	RegisterRecv();
