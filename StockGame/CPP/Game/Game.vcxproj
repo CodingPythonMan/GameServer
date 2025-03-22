@@ -82,12 +82,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Binary\$(Configuration)\</OutDir>
     <IncludePath>$(SolutionDir)Core\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\Poco\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\Libraries\Protobuf\;$(SolutionDir)Libraries\Poco\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Binary\$(Configuration)\</OutDir>
     <IncludePath>$(SolutionDir)Core\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\Poco\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\Libraries\Protobuf\;$(SolutionDir)Libraries\Poco\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -129,7 +129,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Iphlpapi.lib;$(SolutionDir)Libraries\Core\$(Configuration)\Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Iphlpapi.lib;libprotobuf.lib;$(SolutionDir)Libraries\Core\$(Configuration)\Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -150,7 +150,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>PocoFoundationmd.lib;PocoDatamd.lib;PocoDataODBCmd.lib;Iphlpapi.lib;$(SolutionDir)Libraries\Core\$(Configuration)\Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Iphlpapi.lib;libprotobuf.lib;$(SolutionDir)Libraries\Core\$(Configuration)\Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
