@@ -4,6 +4,12 @@
     <Filter Include="Main">
       <UniqueIdentifier>{5426e725-b4a9-4368-8b4e-819e49736680}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{35f75bf4-9415-4eb4-b02c-620f85ac2415}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Handler">
+      <UniqueIdentifier>{fbabcd1e-5dd3-4da4-86e9-8549e28fba33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -15,6 +21,12 @@
     <ClCompile Include="GameSessionManager.cpp">
       <Filter>Main</Filter>
     </ClCompile>
+    <ClCompile Include="ClientPacketHandler.cpp">
+      <Filter>Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Protocol.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSession.h">
@@ -23,5 +35,16 @@
     <ClInclude Include="GameSessionManager.h">
       <Filter>Main</Filter>
     </ClInclude>
+    <ClInclude Include="ClientPacketHandler.h">
+      <Filter>Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocol.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Common\Proto\bin\Protocol.proto">
+      <Filter>Protocol</Filter>
+    </None>
   </ItemGroup>
 </Project>
