@@ -2,7 +2,11 @@
 
 ![GameServer](https://img.shields.io/badge/C%2B%2B-IOCP-blue.svg) ![GameServer](https://img.shields.io/badge/Godot-Network-green.svg)
 
-게임 아이디어가 생각날 때마다 새로운 저장소를 만드는 대신, **Godot과 연동되는 IOCP 서버**를 개발하고 유지하기 위해 만든 프로젝트입니다. 
+게임 아이디어가 생각날 때마다 새로운 저장소를 만드는 대신, 하나로 몰아넣기위해 만든 레포지토리입니다.
+
+1. StockGame : **Godot과 연동되는 IOCP 서버**를 개발하고 유지하기 위해 만든 프로젝트입니다.
+처음엔 주식게임을 만들려고 생각했으나, Godot 이 매력적으로 보여 Godot 연결로 개발 중... 
+시간 될 때, 주식 기능을 넣으려고 합니다.
 
 ## 🏆 프로젝트 개요
 GameServer는 **Godot 게임 엔진과 통신할 수 있는 C++ 기반의 IOCP 서버**입니다. 높은 성능과 안정성을 목표로 하며, 다음과 같은 기능을 포함하고 있습니다.

@@ -142,7 +142,7 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PreBuildEvent>
-      <Command>CALL $(SolutionDir)..\Common\Proto\bin\BuildProto.bat</Command>
+      <Command>CALL $(SolutionDir)..\Common\Protobuf\bin\BuildProto.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -167,7 +167,7 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PreBuildEvent>
-      <Command>CALL $(SolutionDir)..\Common\Proto\bin\BuildProto.bat</Command>
+      <Command>CALL $(SolutionDir)..\Common\Protobuf\bin\BuildProto.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
