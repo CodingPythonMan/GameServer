@@ -329,9 +329,5 @@ __pycache__/
 # End of https://www.gitignore.io/api/c++,visualstudio
 ZipDataTables
 
-!libprotobufd.lib
-!libprotobufd.pdb
-
-!PocoDatamd.lib
-!PocoDataODBCmd.lib
-!PocoFoundationmd.lib
+!/StockGame/Common/Protobuf/
+!/StockGame/Common/Protobuf/**

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message CSEchoReq
+{
+	optional string text = 1;
+}
+
+message SCEchoAck
+{
+	optional string text = 1;
+}
