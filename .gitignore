@@ -331,3 +331,6 @@ ZipDataTables
 
 !/StockGame/Common/Protobuf/
 !/StockGame/Common/Protobuf/**
+
+!/StockGame/Libraries/Protobuf/
+!/StockGame/Libraries/Protobuf/**

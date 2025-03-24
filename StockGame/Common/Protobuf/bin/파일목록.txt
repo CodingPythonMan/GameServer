@@ -1,4 +1,0 @@
-protoc.exe
-libprotoc.dll
-libprotobuf.dll
-BuildProto.bat
