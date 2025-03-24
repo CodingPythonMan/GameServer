@@ -11,7 +11,7 @@ extern PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
 enum : uint16
 {
-	CS_EchoReq,
+	CS_EchoReq = 1,
 	SC_EchoAck
 };
 

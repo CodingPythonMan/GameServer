@@ -16,6 +16,8 @@ bool OnCSEchoReq(PacketSessionRef& session, CSEchoReq& req)
 	SCEchoAck ack;
 	ack.set_text(req.text());
 
+	printf("%s\n", req.text().c_str());
+
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(ack);
 	session->Send(sendBuffer);
 

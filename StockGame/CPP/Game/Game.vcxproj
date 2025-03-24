@@ -32,7 +32,7 @@
     <ClInclude Include="Protocol.pb.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Common\Proto\bin\Protocol.proto" />
+    <None Include="..\..\Common\Protobuf\bin\Protocol.proto" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -43,7 +43,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Common\Proto\bin\Protocol.proto">
+    <None Include="..\..\Common\Protobuf\bin\Protocol.proto">
       <Filter>Protocol</Filter>
     </None>
   </ItemGroup>
