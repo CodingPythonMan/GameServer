@@ -46,6 +46,9 @@ public:
 		return GPacketHandler[header->id](session, buffer, len);
 	}
 	static SendBufferRef MakeSendBuffer(SCEchoAck& pkt) { return MakeSendBuffer(pkt, SC_EchoAck); }
+	static SendBufferRef MakeSendBuffer(SCEnterGameAck& pkt) { return MakeSendBuffer(pkt, SC_EnterGameAck); }
+	static SendBufferRef MakeSendBuffer(SCMoveAck& pkt) { return MakeSendBuffer(pkt, SC_MoveAck); }
+	static SendBufferRef MakeSendBuffer(SCMoveNoti& pkt) { return MakeSendBuffer(pkt, SC_MoveNoti); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

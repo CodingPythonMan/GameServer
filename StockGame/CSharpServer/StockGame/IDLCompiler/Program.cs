@@ -117,7 +117,15 @@ class IDLCompiler
             writer.WriteLine("\t\tPacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);");
             writer.WriteLine("\t\treturn GPacketHandler[header->id](session, buffer, len);");
             writer.WriteLine("\t}");
-            writer.WriteLine("\tstatic SendBufferRef MakeSendBuffer(SCEchoAck& pkt) { return MakeSendBuffer(pkt, SC_EchoAck); }");
+            foreach (var msg in messages)
+            {
+                if (msg.StartsWith("SC"))
+                {
+                    // enum에서는 ProcessEnumMessageName를 사용하여 SC 패킷의 이름 생성
+                    string enumName = ProcessEnumMessageName(msg);
+                    writer.WriteLine($"\tstatic SendBufferRef MakeSendBuffer({msg}& pkt) {{ return MakeSendBuffer(pkt, {enumName}); }}");
+                }
+            }
             writer.WriteLine();
             writer.WriteLine("private:");
             writer.WriteLine("\ttemplate<typename PacketType, typename ProcessFunc>");
