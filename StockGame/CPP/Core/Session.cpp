@@ -8,12 +8,12 @@
 
 Session::Session() : mRecvBuffer(BUFFER_SIZE)
 {
-	_socket = SocketUtils::CreateSocket();
+	mClientSocket = SocketUtils::CreateSocket();
 }
 
 Session::~Session()
 {
-	SocketUtils::Close(_socket);
+	SocketUtils::Close(mClientSocket);
 }
 
 void Session::Send(SendBufferRef sendBuffer)
@@ -53,7 +53,7 @@ void Session::Disconnect(const WCHAR* cause)
 
 HANDLE Session::GetHandle()
 {
-	return reinterpret_cast<HANDLE>(_socket);
+	return reinterpret_cast<HANDLE>(mClientSocket);
 }
 
 void Session::Dispatch(IocpEvent* iocpEvent, int32 numOfBytes)
@@ -85,18 +85,22 @@ bool Session::RegisterConnect()
 	if (GetService()->GetServiceType() != ServiceType::Client)
 		return false;
 
-	if (SocketUtils::SetReuseAddress(_socket, true) == false)
+	if (SocketUtils::SetReuseAddress(mClientSocket, true) == false)
+	{
 		return false;
+	}
 
-	if (SocketUtils::BindAnyAddress(_socket, 0/*남는거*/) == false)
+	if (SocketUtils::BindAnyAddress(mClientSocket, 0) == false)
+	{
 		return false;
+	}
 
 	_connectEvent.Init();
 	_connectEvent.owner = shared_from_this(); // ADD_REF
 
 	DWORD numOfBytes = 0;
 	SOCKADDR_IN sockAddr = GetService()->GetNetAddress().GetSockAddr();
-	if (false == SocketUtils::ConnectEx(_socket, reinterpret_cast<SOCKADDR*>(&sockAddr), sizeof(sockAddr),
+	if (false == SocketUtils::ConnectEx(mClientSocket, reinterpret_cast<SOCKADDR*>(&sockAddr), sizeof(sockAddr),
 		nullptr, 0, &numOfBytes, &_connectEvent))
 	{
 		int32 errorCode = ::WSAGetLastError();
@@ -115,7 +119,7 @@ bool Session::RegisterDisconnect()
 	_disconnectEvent.Init();
 	_disconnectEvent.owner = shared_from_this();
 
-	if (false == SocketUtils::DisconnectEx(_socket, &_disconnectEvent, TF_REUSE_SOCKET, 0))
+	if (false == SocketUtils::DisconnectEx(mClientSocket, &_disconnectEvent, TF_REUSE_SOCKET, 0))
 	{
 		int32 errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
@@ -133,8 +137,8 @@ void Session::RegisterRecv()
 	if (IsConnected() == false)
 		return;
 
-	_recvEvent.Init();
-	_recvEvent.owner = shared_from_this();
+	mRecvEvent.Init();
+	mRecvEvent.owner = shared_from_this();
 
 	WSABUF wsaBuf;
 	wsaBuf.buf = reinterpret_cast<char*>(mRecvBuffer.GetWritePos());
@@ -142,13 +146,13 @@ void Session::RegisterRecv()
 
 	DWORD numOfBytes = 0;
 	DWORD flags = 0;
-	if (SOCKET_ERROR == ::WSARecv(_socket, &wsaBuf, 1, OUT & numOfBytes, OUT & flags, &_recvEvent, nullptr))
+	if (SOCKET_ERROR == ::WSARecv(mClientSocket, &wsaBuf, 1, OUT & numOfBytes, OUT & flags, &mRecvEvent, nullptr))
 	{
 		int32 errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
 		{
 			HandleError(errorCode);
-			_recvEvent.owner = nullptr; // RELEASE_REF
+			mRecvEvent.owner = nullptr; // RELEASE_REF
 		}
 	}
 }
@@ -156,7 +160,9 @@ void Session::RegisterRecv()
 void Session::RegisterSend()
 {
 	if (IsConnected() == false)
+	{
 		return;
+	}
 
 	_sendEvent.Init();
 	_sendEvent.owner = shared_from_this();
@@ -190,7 +196,7 @@ void Session::RegisterSend()
 	}
 
 	DWORD numOfBytes = 0;
-	if (SOCKET_ERROR == ::WSASend(_socket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT & numOfBytes, 0, &_sendEvent, nullptr))
+	if (SOCKET_ERROR == ::WSASend(mClientSocket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT & numOfBytes, 0, &_sendEvent, nullptr))
 	{
 		int32 errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
@@ -229,7 +235,7 @@ void Session::ProcessDisconnect()
 
 void Session::ProcessRecv(int32 numOfBytes)
 {
-	_recvEvent.owner = nullptr; // RELEASE_REF
+	mRecvEvent.owner = nullptr; // RELEASE_REF
 
 	if (numOfBytes == 0)
 	{
@@ -253,7 +259,7 @@ void Session::ProcessRecv(int32 numOfBytes)
 
 	// 커서 정리
 	mRecvBuffer.Clean();
-	 
+	
 	// 수신 등록
 	RegisterRecv();
 }

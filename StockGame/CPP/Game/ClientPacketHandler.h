@@ -22,7 +22,7 @@ bool OnCSEchoReq(PacketSessionRef& session, CSEchoReq& pkt);
 class ClientPacketHandler
 {
 public:
-	static void Init()
+	static void Initialize()
 	{
 		for (int32 i = 0; i < UINT16_MAX; i++)
 		{

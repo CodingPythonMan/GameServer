@@ -5,6 +5,7 @@
 #include "ThreadManager.h"
 #include "Service.h"
 #include "DBService.h"
+#include "ClientPacketHandler.h"
 
 #define WORKER_TICK 64
 
@@ -27,6 +28,8 @@ void DoWorkerJob(ServerServiceRef& service)
 
 int main()
 {
+	ClientPacketHandler::Initialize();
+
 	ServerServiceRef service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 1537),
 		MakeShared<IocpCore>(),

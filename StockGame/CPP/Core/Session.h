@@ -36,7 +36,7 @@ public:
 						/* 정보 관련 */
 	void				SetNetAddress(NetAddress address) { _netAddress = address; }
 	NetAddress			GetAddress() { return _netAddress; }
-	SOCKET				GetSocket() { return _socket; }
+	SOCKET				GetSocket() { return mClientSocket; }
 	bool				IsConnected() { return _connected; }
 	SessionRef			GetSessionRef() { return static_pointer_cast<Session>(shared_from_this()); }
 
@@ -68,7 +68,7 @@ protected:
 
 private:
 	std::weak_ptr<Service>	_service;
-	SOCKET				_socket = INVALID_SOCKET;
+	SOCKET				mClientSocket = INVALID_SOCKET;
 	NetAddress			_netAddress = {};
 	std::atomic<bool>		_connected = false;
 
@@ -86,7 +86,7 @@ private:
 						// IocpEvent 재사용
 	ConnectEvent		_connectEvent;
 	DisconnectEvent		_disconnectEvent;
-	RecvEvent			_recvEvent;
+	RecvEvent			mRecvEvent;
 	SendEvent			_sendEvent;
 };
 

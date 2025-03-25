@@ -9,3 +9,13 @@ message SCEchoAck
 {
 	string text = 1;
 }
+
+message CSEnterGameReq
+{
+}
+
+message SCEnterGameAck
+{
+	int32	X = 1;
+	int32	Y = 2;
+}
