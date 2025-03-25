@@ -23,3 +23,15 @@ bool OnCSEchoReq(PacketSessionRef& session, CSEchoReq& req)
 
 	return true;
 }
+
+bool OnCSEnterGameReq(PacketSessionRef& session, CSEnterGameReq& pkt)
+{
+
+
+	return true;
+}
+
+bool OnCSMoveReq(PacketSessionRef& session, CSMoveReq& pkt)
+{
+	return true;
+}

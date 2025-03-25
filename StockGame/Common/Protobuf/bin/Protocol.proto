@@ -16,6 +16,24 @@ message CSEnterGameReq
 
 message SCEnterGameAck
 {
-	int32	X = 1;
-	int32	Y = 2;
+	int64	UniqueID = 1;
+	int32	X = 2;
+	int32	Y = 3;
+}
+
+message CSMoveReq
+{
+}
+
+message SCMoveAck
+{
+	
+
+}
+
+message SCMoveNoti
+{
+	int64	UniqueID = 1;
+	int32	X = 2;
+	int32	Y = 3;
 }

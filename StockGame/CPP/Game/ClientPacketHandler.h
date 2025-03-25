@@ -12,12 +12,19 @@ extern PacketHandlerFunc GPacketHandler[UINT16_MAX];
 enum : uint16
 {
 	CS_EchoReq = 1,
-	SC_EchoAck
+	SC_EchoAck = 2,
+	CS_EnterGameReq = 3,
+	SC_EnterGameAck = 4,
+	CS_MoveReq = 5,
+	SC_MoveAck = 6,
+	SC_MoveNoti = 7,
 };
 
 // Custom Handlers
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len);
 bool OnCSEchoReq(PacketSessionRef& session, CSEchoReq& pkt);
+bool OnCSEnterGameReq(PacketSessionRef& session, CSEnterGameReq& pkt);
+bool OnCSMoveReq(PacketSessionRef& session, CSMoveReq& pkt);
 
 class ClientPacketHandler
 {
@@ -29,6 +36,8 @@ public:
 			GPacketHandler[i] = Handle_INVALID;
 		}
 		GPacketHandler[CS_EchoReq] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<CSEchoReq>(OnCSEchoReq, session, buffer, len); };
+		GPacketHandler[CS_EnterGameReq] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<CSEnterGameReq>(OnCSEnterGameReq, session, buffer, len); };
+		GPacketHandler[CS_MoveReq] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<CSMoveReq>(OnCSMoveReq, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -45,7 +54,6 @@ private:
 		PacketType pkt;
 		if (pkt.ParseFromArray(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader)) == false)
 			return false;
-
 		return func(session, pkt);
 	}
 

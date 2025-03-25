@@ -7,8 +7,11 @@
     <Filter Include="Protocol">
       <UniqueIdentifier>{35f75bf4-9415-4eb4-b02c-620f85ac2415}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents">
+      <UniqueIdentifier>{c24c7a71-4e35-446a-aa6f-bb3cd1b15c6d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Handler">
-      <UniqueIdentifier>{fbabcd1e-5dd3-4da4-86e9-8549e28fba33}</UniqueIdentifier>
+      <UniqueIdentifier>{e1b93bf4-4843-4fa9-aed7-b4dca294d328}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -21,11 +24,14 @@
     <ClCompile Include="GameSessionManager.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="ClientPacketHandler.cpp">
-      <Filter>Handler</Filter>
-    </ClCompile>
     <ClCompile Include="Protocol.pb.cc">
       <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientPacketHandler.cpp">
+      <Filter>Handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -35,11 +41,14 @@
     <ClInclude Include="GameSessionManager.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="ClientPacketHandler.h">
-      <Filter>Handler</Filter>
-    </ClInclude>
     <ClInclude Include="Protocol.pb.h">
       <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientPacketHandler.h">
+      <Filter>Handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
