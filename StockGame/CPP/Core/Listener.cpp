@@ -45,7 +45,7 @@ bool Listener::StartAccept(ServerServiceRef service)
 	for (int32 i = 0; i < acceptCount; i++)
 	{
 		AcceptEvent* acceptEvent = xnew<AcceptEvent>();
-		acceptEvent->owner = shared_from_this();
+		acceptEvent->mOwner = shared_from_this();
 		_acceptEvents.push_back(acceptEvent);
 		RegisterAccept(acceptEvent);
 	}
@@ -65,7 +65,7 @@ HANDLE Listener::GetHandle()
 
 void Listener::Dispatch(IocpEvent* iocpEvent, int32 numOfBytes)
 {
-	ASSERT_CRASH(iocpEvent->eventType == EventType::Accept);
+	ASSERT_CRASH(iocpEvent->mEventType == EventType::Accept);
 	AcceptEvent* acceptEvent = static_cast<AcceptEvent*>(iocpEvent);
 	ProcessAccept(acceptEvent);
 }
@@ -74,7 +74,7 @@ void Listener::RegisterAccept(AcceptEvent* acceptEvent)
 {
 	SessionRef session = _service->CreateSession(); // Register Iocp
 
-	acceptEvent->Init();
+	acceptEvent->Initialize();
 	acceptEvent->session = session;
 
 	DWORD bytesReceived = 0;

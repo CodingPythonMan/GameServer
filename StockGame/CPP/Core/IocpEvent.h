@@ -24,11 +24,11 @@ class IocpEvent : public OVERLAPPED
 public:
 	IocpEvent(EventType type);
 
-	void			Init();
+	void			Initialize();
 
 public:
-	EventType		eventType;
-	IocpObjectRef	owner;
+	EventType		mEventType;
+	IocpObjectRef	mOwner;
 };
 
 /*---------------
@@ -83,5 +83,5 @@ class SendEvent : public IocpEvent
 public:
 	SendEvent() : IocpEvent(EventType::Send) {}
 
-	std::vector<SendBufferRef> sendBuffers;
+	std::vector<SendBufferRef> mSendBufferList;
 };

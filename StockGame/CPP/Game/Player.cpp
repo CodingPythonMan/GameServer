@@ -11,4 +11,5 @@ Player::~Player()
 	mUniqueID = 0;
 	mX = 0;
 	mY = 0;
+	mIsMoved = false;
 }

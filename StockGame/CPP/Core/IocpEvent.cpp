@@ -1,11 +1,11 @@
 #include "IocpEvent.h"
 
-IocpEvent::IocpEvent(EventType type) : eventType(type)
+IocpEvent::IocpEvent(EventType type) : mEventType(type)
 {
-	Init();
+	Initialize();
 }
 
-void IocpEvent::Init()
+void IocpEvent::Initialize()
 {
 	OVERLAPPED::hEvent = 0;
 	OVERLAPPED::Internal = 0;

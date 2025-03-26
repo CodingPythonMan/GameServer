@@ -26,7 +26,7 @@ bool IocpCore::Dispatch(uint32 timeoutMs)
 
 	if (::GetQueuedCompletionStatus(_iocpHandle, OUT &numOfBytes, OUT &key, OUT reinterpret_cast<LPOVERLAPPED*>(&iocpEvent), timeoutMs))
 	{
-		IocpObjectRef iocpObject = iocpEvent->owner;
+		IocpObjectRef iocpObject = iocpEvent->mOwner;
 		iocpObject->Dispatch(iocpEvent, numOfBytes);
 	}
 	else
@@ -37,7 +37,7 @@ bool IocpCore::Dispatch(uint32 timeoutMs)
 		case WAIT_TIMEOUT:
 			return false;
 		default:
-			IocpObjectRef iocpObject = iocpEvent->owner;
+			IocpObjectRef iocpObject = iocpEvent->mOwner;
 			iocpObject->Dispatch(iocpEvent, numOfBytes);
 			break;
 		}

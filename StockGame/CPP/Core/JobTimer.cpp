@@ -15,7 +15,9 @@ void JobTimer::Distribute(uint64 now)
 {
 	// 한번에 1 쓰레드만 통과
 	if (mIsDistributing.exchange(true) == true)
+	{
 		return;
+	}
 
 	std::vector<TimerItem> items;
 

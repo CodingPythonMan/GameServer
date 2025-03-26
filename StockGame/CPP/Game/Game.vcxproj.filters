@@ -50,6 +50,9 @@
     <ClInclude Include="ClientPacketHandler.h">
       <Filter>Handler</Filter>
     </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Common\Protobuf\bin\Protocol.proto">

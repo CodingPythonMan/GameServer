@@ -23,15 +23,21 @@ message SCEnterGameAck
 
 message CSMoveReq
 {
-}
-
-message SCMoveAck
-{
-	
-
+	int32	Direction = 1;
 }
 
 message SCMoveNoti
+{
+	int64	UniqueID = 1;
+	int32	X = 2;
+	int32	Y = 3;
+}
+
+message CSStopReq
+{
+}
+
+message SCStopNoti
 {
 	int64	UniqueID = 1;
 	int32	X = 2;
