@@ -6,6 +6,7 @@
 #include "Service.h"
 #include "DBService.h"
 #include "ClientPacketHandler.h"
+#include "MapManager.h"
 
 #define WORKER_TICK 64
 
@@ -34,7 +35,7 @@ int main()
 		NetAddress(L"127.0.0.1", 1537),
 		MakeShared<IocpCore>(),
 		MakeShared<GameSession>,
-		100);
+		10);
 
 	ASSERT_CRASH(service->Start());
 
@@ -49,6 +50,25 @@ int main()
 				DoWorkerJob(service);
 			});
 	}
+
+	GThreadManager->Launch([]() {
+		while (true)
+		{
+			const uint64 startTick = ::GetTickCount64();
+
+			// MapManager의 Update 호출
+			MapManager::GetInstance().Update();
+
+			// 20ms마다 실행하도록 간격 조정
+			const uint64 endTick = ::GetTickCount64();
+			const uint64 elapsed = endTick - startTick;
+
+			if (elapsed < 20)
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(20 - elapsed));
+			}
+		}
+		});
 
 	// Main Thread
 	DoWorkerJob(service);

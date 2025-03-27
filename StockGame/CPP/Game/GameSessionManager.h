@@ -9,13 +9,15 @@ using GameSessionRef = std::shared_ptr<GameSession>;
 class GameSessionManager
 {
 public:
-	void Add(GameSessionRef session);
-	void Remove(GameSessionRef session);
-	void BroadCast(SendBufferRef sendBuffer);
+	GameSessionManager();
+
+	void	Add(GameSessionRef session);
+	void	Remove(GameSessionRef session);
+	void	BroadCast(SendBufferRef sendBuffer, GameSessionRef excludeSession = GameSessionRef());
 
 private:
 	USE_LOCK;
-	std::set<GameSessionRef> _sessions;
+	std::set<GameSessionRef> mSessionList;
 };
 
 extern GameSessionManager GSessionManager;

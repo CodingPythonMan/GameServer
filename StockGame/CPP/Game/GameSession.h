@@ -14,5 +14,5 @@ public:
 	virtual void OnSend(int32 len) override;
 
 public:
-	std::vector<std::shared_ptr<Player>>	mPlayerList;
+	std::shared_ptr<Player>			mPlayer;
 };

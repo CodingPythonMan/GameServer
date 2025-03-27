@@ -54,26 +54,34 @@ extern CSEnterGameReqDefaultTypeInternal _CSEnterGameReq_default_instance_;
 class CSMoveReq;
 struct CSMoveReqDefaultTypeInternal;
 extern CSMoveReqDefaultTypeInternal _CSMoveReq_default_instance_;
+class CSStopReq;
+struct CSStopReqDefaultTypeInternal;
+extern CSStopReqDefaultTypeInternal _CSStopReq_default_instance_;
 class SCEchoAck;
 struct SCEchoAckDefaultTypeInternal;
 extern SCEchoAckDefaultTypeInternal _SCEchoAck_default_instance_;
 class SCEnterGameAck;
 struct SCEnterGameAckDefaultTypeInternal;
 extern SCEnterGameAckDefaultTypeInternal _SCEnterGameAck_default_instance_;
-class SCMoveAck;
-struct SCMoveAckDefaultTypeInternal;
-extern SCMoveAckDefaultTypeInternal _SCMoveAck_default_instance_;
+class SCEnterGameNoti;
+struct SCEnterGameNotiDefaultTypeInternal;
+extern SCEnterGameNotiDefaultTypeInternal _SCEnterGameNoti_default_instance_;
 class SCMoveNoti;
 struct SCMoveNotiDefaultTypeInternal;
 extern SCMoveNotiDefaultTypeInternal _SCMoveNoti_default_instance_;
+class SCStopNoti;
+struct SCStopNotiDefaultTypeInternal;
+extern SCStopNotiDefaultTypeInternal _SCStopNoti_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::CSEchoReq* Arena::CreateMaybeMessage<::CSEchoReq>(Arena*);
 template<> ::CSEnterGameReq* Arena::CreateMaybeMessage<::CSEnterGameReq>(Arena*);
 template<> ::CSMoveReq* Arena::CreateMaybeMessage<::CSMoveReq>(Arena*);
+template<> ::CSStopReq* Arena::CreateMaybeMessage<::CSStopReq>(Arena*);
 template<> ::SCEchoAck* Arena::CreateMaybeMessage<::SCEchoAck>(Arena*);
 template<> ::SCEnterGameAck* Arena::CreateMaybeMessage<::SCEnterGameAck>(Arena*);
-template<> ::SCMoveAck* Arena::CreateMaybeMessage<::SCMoveAck>(Arena*);
+template<> ::SCEnterGameNoti* Arena::CreateMaybeMessage<::SCEnterGameNoti>(Arena*);
 template<> ::SCMoveNoti* Arena::CreateMaybeMessage<::SCMoveNoti>(Arena*);
+template<> ::SCStopNoti* Arena::CreateMaybeMessage<::SCStopNoti>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
 // ===================================================================
@@ -623,6 +631,165 @@ class SCEnterGameAck final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kXFieldNumber = 1,
+    kYFieldNumber = 2,
+  };
+  // float X = 1;
+  void clear_x();
+  float x() const;
+  void set_x(float value);
+  private:
+  float _internal_x() const;
+  void _internal_set_x(float value);
+  public:
+
+  // float Y = 2;
+  void clear_y();
+  float y() const;
+  void set_y(float value);
+  private:
+  float _internal_y() const;
+  void _internal_set_y(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:SCEnterGameAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    float x_;
+    float y_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SCEnterGameNoti final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SCEnterGameNoti) */ {
+ public:
+  inline SCEnterGameNoti() : SCEnterGameNoti(nullptr) {}
+  ~SCEnterGameNoti() override;
+  explicit PROTOBUF_CONSTEXPR SCEnterGameNoti(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SCEnterGameNoti(const SCEnterGameNoti& from);
+  SCEnterGameNoti(SCEnterGameNoti&& from) noexcept
+    : SCEnterGameNoti() {
+    *this = ::std::move(from);
+  }
+
+  inline SCEnterGameNoti& operator=(const SCEnterGameNoti& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SCEnterGameNoti& operator=(SCEnterGameNoti&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SCEnterGameNoti& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SCEnterGameNoti* internal_default_instance() {
+    return reinterpret_cast<const SCEnterGameNoti*>(
+               &_SCEnterGameNoti_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(SCEnterGameNoti& a, SCEnterGameNoti& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SCEnterGameNoti* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SCEnterGameNoti* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SCEnterGameNoti* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SCEnterGameNoti>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SCEnterGameNoti& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SCEnterGameNoti& from) {
+    SCEnterGameNoti::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SCEnterGameNoti* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "SCEnterGameNoti";
+  }
+  protected:
+  explicit SCEnterGameNoti(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
     kUniqueIDFieldNumber = 1,
     kXFieldNumber = 2,
     kYFieldNumber = 3,
@@ -636,25 +803,25 @@ class SCEnterGameAck final :
   void _internal_set_uniqueid(int64_t value);
   public:
 
-  // int32 X = 2;
+  // float X = 2;
   void clear_x();
-  int32_t x() const;
-  void set_x(int32_t value);
+  float x() const;
+  void set_x(float value);
   private:
-  int32_t _internal_x() const;
-  void _internal_set_x(int32_t value);
+  float _internal_x() const;
+  void _internal_set_x(float value);
   public:
 
-  // int32 Y = 3;
+  // float Y = 3;
   void clear_y();
-  int32_t y() const;
-  void set_y(int32_t value);
+  float y() const;
+  void set_y(float value);
   private:
-  int32_t _internal_y() const;
-  void _internal_set_y(int32_t value);
+  float _internal_y() const;
+  void _internal_set_y(float value);
   public:
 
-  // @@protoc_insertion_point(class_scope:SCEnterGameAck)
+  // @@protoc_insertion_point(class_scope:SCEnterGameNoti)
  private:
   class _Internal;
 
@@ -663,8 +830,8 @@ class SCEnterGameAck final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     int64_t uniqueid_;
-    int32_t x_;
-    int32_t y_;
+    float x_;
+    float y_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -673,9 +840,10 @@ class SCEnterGameAck final :
 // -------------------------------------------------------------------
 
 class CSMoveReq final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:CSMoveReq) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CSMoveReq) */ {
  public:
   inline CSMoveReq() : CSMoveReq(nullptr) {}
+  ~CSMoveReq() override;
   explicit PROTOBUF_CONSTEXPR CSMoveReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
   CSMoveReq(const CSMoveReq& from);
@@ -719,7 +887,7 @@ class CSMoveReq final :
                &_CSMoveReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(CSMoveReq& a, CSMoveReq& b) {
     a.Swap(&b);
@@ -748,15 +916,29 @@ class CSMoveReq final :
   CSMoveReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
     return CreateMaybeMessage<CSMoveReq>(arena);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const CSMoveReq& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CSMoveReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const CSMoveReq& from) {
+    CSMoveReq::MergeImpl(*this, from);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const CSMoveReq& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
-  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
   public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CSMoveReq* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
@@ -777,6 +959,18 @@ class CSMoveReq final :
 
   // accessors -------------------------------------------------------
 
+  enum : int {
+    kDirectionFieldNumber = 1,
+  };
+  // int32 Direction = 1;
+  void clear_direction();
+  int32_t direction() const;
+  void set_direction(int32_t value);
+  private:
+  int32_t _internal_direction() const;
+  void _internal_set_direction(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:CSMoveReq)
  private:
   class _Internal;
@@ -785,125 +979,10 @@ class CSMoveReq final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    int32_t direction_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
-  friend struct ::TableStruct_Protocol_2eproto;
-};
-// -------------------------------------------------------------------
-
-class SCMoveAck final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:SCMoveAck) */ {
- public:
-  inline SCMoveAck() : SCMoveAck(nullptr) {}
-  explicit PROTOBUF_CONSTEXPR SCMoveAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  SCMoveAck(const SCMoveAck& from);
-  SCMoveAck(SCMoveAck&& from) noexcept
-    : SCMoveAck() {
-    *this = ::std::move(from);
-  }
-
-  inline SCMoveAck& operator=(const SCMoveAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline SCMoveAck& operator=(SCMoveAck&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const SCMoveAck& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const SCMoveAck* internal_default_instance() {
-    return reinterpret_cast<const SCMoveAck*>(
-               &_SCMoveAck_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    5;
-
-  friend void swap(SCMoveAck& a, SCMoveAck& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(SCMoveAck* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(SCMoveAck* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  SCMoveAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<SCMoveAck>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const SCMoveAck& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const SCMoveAck& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
-  }
-  public:
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "SCMoveAck";
-  }
-  protected:
-  explicit SCMoveAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:SCMoveAck)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-  };
+  union { Impl_ _impl_; };
   friend struct ::TableStruct_Protocol_2eproto;
 };
 // -------------------------------------------------------------------
@@ -1042,22 +1121,22 @@ class SCMoveNoti final :
   void _internal_set_uniqueid(int64_t value);
   public:
 
-  // int32 X = 2;
+  // float X = 2;
   void clear_x();
-  int32_t x() const;
-  void set_x(int32_t value);
+  float x() const;
+  void set_x(float value);
   private:
-  int32_t _internal_x() const;
-  void _internal_set_x(int32_t value);
+  float _internal_x() const;
+  void _internal_set_x(float value);
   public:
 
-  // int32 Y = 3;
+  // float Y = 3;
   void clear_y();
-  int32_t y() const;
-  void set_y(int32_t value);
+  float y() const;
+  void set_y(float value);
   private:
-  int32_t _internal_y() const;
-  void _internal_set_y(int32_t value);
+  float _internal_y() const;
+  void _internal_set_y(float value);
   public:
 
   // @@protoc_insertion_point(class_scope:SCMoveNoti)
@@ -1069,8 +1148,296 @@ class SCMoveNoti final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     int64_t uniqueid_;
-    int32_t x_;
-    int32_t y_;
+    float x_;
+    float y_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CSStopReq final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:CSStopReq) */ {
+ public:
+  inline CSStopReq() : CSStopReq(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR CSStopReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CSStopReq(const CSStopReq& from);
+  CSStopReq(CSStopReq&& from) noexcept
+    : CSStopReq() {
+    *this = ::std::move(from);
+  }
+
+  inline CSStopReq& operator=(const CSStopReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CSStopReq& operator=(CSStopReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CSStopReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CSStopReq* internal_default_instance() {
+    return reinterpret_cast<const CSStopReq*>(
+               &_CSStopReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  friend void swap(CSStopReq& a, CSStopReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CSStopReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CSStopReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CSStopReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CSStopReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const CSStopReq& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const CSStopReq& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "CSStopReq";
+  }
+  protected:
+  explicit CSStopReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CSStopReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+  };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SCStopNoti final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SCStopNoti) */ {
+ public:
+  inline SCStopNoti() : SCStopNoti(nullptr) {}
+  ~SCStopNoti() override;
+  explicit PROTOBUF_CONSTEXPR SCStopNoti(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SCStopNoti(const SCStopNoti& from);
+  SCStopNoti(SCStopNoti&& from) noexcept
+    : SCStopNoti() {
+    *this = ::std::move(from);
+  }
+
+  inline SCStopNoti& operator=(const SCStopNoti& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SCStopNoti& operator=(SCStopNoti&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SCStopNoti& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SCStopNoti* internal_default_instance() {
+    return reinterpret_cast<const SCStopNoti*>(
+               &_SCStopNoti_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(SCStopNoti& a, SCStopNoti& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SCStopNoti* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SCStopNoti* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SCStopNoti* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SCStopNoti>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SCStopNoti& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SCStopNoti& from) {
+    SCStopNoti::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SCStopNoti* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "SCStopNoti";
+  }
+  protected:
+  explicit SCStopNoti(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUniqueIDFieldNumber = 1,
+    kXFieldNumber = 2,
+    kYFieldNumber = 3,
+  };
+  // int64 UniqueID = 1;
+  void clear_uniqueid();
+  int64_t uniqueid() const;
+  void set_uniqueid(int64_t value);
+  private:
+  int64_t _internal_uniqueid() const;
+  void _internal_set_uniqueid(int64_t value);
+  public:
+
+  // float X = 2;
+  void clear_x();
+  float x() const;
+  void set_x(float value);
+  private:
+  float _internal_x() const;
+  void _internal_set_x(float value);
+  public:
+
+  // float Y = 3;
+  void clear_y();
+  float y() const;
+  void set_y(float value);
+  private:
+  float _internal_y() const;
+  void _internal_set_y(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:SCStopNoti)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int64_t uniqueid_;
+    float x_;
+    float y_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -1199,73 +1566,133 @@ inline void SCEchoAck::set_allocated_text(std::string* text) {
 
 // SCEnterGameAck
 
-// int64 UniqueID = 1;
-inline void SCEnterGameAck::clear_uniqueid() {
-  _impl_.uniqueid_ = int64_t{0};
-}
-inline int64_t SCEnterGameAck::_internal_uniqueid() const {
-  return _impl_.uniqueid_;
-}
-inline int64_t SCEnterGameAck::uniqueid() const {
-  // @@protoc_insertion_point(field_get:SCEnterGameAck.UniqueID)
-  return _internal_uniqueid();
-}
-inline void SCEnterGameAck::_internal_set_uniqueid(int64_t value) {
-  
-  _impl_.uniqueid_ = value;
-}
-inline void SCEnterGameAck::set_uniqueid(int64_t value) {
-  _internal_set_uniqueid(value);
-  // @@protoc_insertion_point(field_set:SCEnterGameAck.UniqueID)
-}
-
-// int32 X = 2;
+// float X = 1;
 inline void SCEnterGameAck::clear_x() {
   _impl_.x_ = 0;
 }
-inline int32_t SCEnterGameAck::_internal_x() const {
+inline float SCEnterGameAck::_internal_x() const {
   return _impl_.x_;
 }
-inline int32_t SCEnterGameAck::x() const {
+inline float SCEnterGameAck::x() const {
   // @@protoc_insertion_point(field_get:SCEnterGameAck.X)
   return _internal_x();
 }
-inline void SCEnterGameAck::_internal_set_x(int32_t value) {
+inline void SCEnterGameAck::_internal_set_x(float value) {
   
   _impl_.x_ = value;
 }
-inline void SCEnterGameAck::set_x(int32_t value) {
+inline void SCEnterGameAck::set_x(float value) {
   _internal_set_x(value);
   // @@protoc_insertion_point(field_set:SCEnterGameAck.X)
 }
 
-// int32 Y = 3;
+// float Y = 2;
 inline void SCEnterGameAck::clear_y() {
   _impl_.y_ = 0;
 }
-inline int32_t SCEnterGameAck::_internal_y() const {
+inline float SCEnterGameAck::_internal_y() const {
   return _impl_.y_;
 }
-inline int32_t SCEnterGameAck::y() const {
+inline float SCEnterGameAck::y() const {
   // @@protoc_insertion_point(field_get:SCEnterGameAck.Y)
   return _internal_y();
 }
-inline void SCEnterGameAck::_internal_set_y(int32_t value) {
+inline void SCEnterGameAck::_internal_set_y(float value) {
   
   _impl_.y_ = value;
 }
-inline void SCEnterGameAck::set_y(int32_t value) {
+inline void SCEnterGameAck::set_y(float value) {
   _internal_set_y(value);
   // @@protoc_insertion_point(field_set:SCEnterGameAck.Y)
 }
 
 // -------------------------------------------------------------------
 
-// CSMoveReq
+// SCEnterGameNoti
+
+// int64 UniqueID = 1;
+inline void SCEnterGameNoti::clear_uniqueid() {
+  _impl_.uniqueid_ = int64_t{0};
+}
+inline int64_t SCEnterGameNoti::_internal_uniqueid() const {
+  return _impl_.uniqueid_;
+}
+inline int64_t SCEnterGameNoti::uniqueid() const {
+  // @@protoc_insertion_point(field_get:SCEnterGameNoti.UniqueID)
+  return _internal_uniqueid();
+}
+inline void SCEnterGameNoti::_internal_set_uniqueid(int64_t value) {
+  
+  _impl_.uniqueid_ = value;
+}
+inline void SCEnterGameNoti::set_uniqueid(int64_t value) {
+  _internal_set_uniqueid(value);
+  // @@protoc_insertion_point(field_set:SCEnterGameNoti.UniqueID)
+}
+
+// float X = 2;
+inline void SCEnterGameNoti::clear_x() {
+  _impl_.x_ = 0;
+}
+inline float SCEnterGameNoti::_internal_x() const {
+  return _impl_.x_;
+}
+inline float SCEnterGameNoti::x() const {
+  // @@protoc_insertion_point(field_get:SCEnterGameNoti.X)
+  return _internal_x();
+}
+inline void SCEnterGameNoti::_internal_set_x(float value) {
+  
+  _impl_.x_ = value;
+}
+inline void SCEnterGameNoti::set_x(float value) {
+  _internal_set_x(value);
+  // @@protoc_insertion_point(field_set:SCEnterGameNoti.X)
+}
+
+// float Y = 3;
+inline void SCEnterGameNoti::clear_y() {
+  _impl_.y_ = 0;
+}
+inline float SCEnterGameNoti::_internal_y() const {
+  return _impl_.y_;
+}
+inline float SCEnterGameNoti::y() const {
+  // @@protoc_insertion_point(field_get:SCEnterGameNoti.Y)
+  return _internal_y();
+}
+inline void SCEnterGameNoti::_internal_set_y(float value) {
+  
+  _impl_.y_ = value;
+}
+inline void SCEnterGameNoti::set_y(float value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:SCEnterGameNoti.Y)
+}
 
 // -------------------------------------------------------------------
 
-// SCMoveAck
+// CSMoveReq
+
+// int32 Direction = 1;
+inline void CSMoveReq::clear_direction() {
+  _impl_.direction_ = 0;
+}
+inline int32_t CSMoveReq::_internal_direction() const {
+  return _impl_.direction_;
+}
+inline int32_t CSMoveReq::direction() const {
+  // @@protoc_insertion_point(field_get:CSMoveReq.Direction)
+  return _internal_direction();
+}
+inline void CSMoveReq::_internal_set_direction(int32_t value) {
+  
+  _impl_.direction_ = value;
+}
+inline void CSMoveReq::set_direction(int32_t value) {
+  _internal_set_direction(value);
+  // @@protoc_insertion_point(field_set:CSMoveReq.Direction)
+}
 
 // -------------------------------------------------------------------
 
@@ -1291,49 +1718,121 @@ inline void SCMoveNoti::set_uniqueid(int64_t value) {
   // @@protoc_insertion_point(field_set:SCMoveNoti.UniqueID)
 }
 
-// int32 X = 2;
+// float X = 2;
 inline void SCMoveNoti::clear_x() {
   _impl_.x_ = 0;
 }
-inline int32_t SCMoveNoti::_internal_x() const {
+inline float SCMoveNoti::_internal_x() const {
   return _impl_.x_;
 }
-inline int32_t SCMoveNoti::x() const {
+inline float SCMoveNoti::x() const {
   // @@protoc_insertion_point(field_get:SCMoveNoti.X)
   return _internal_x();
 }
-inline void SCMoveNoti::_internal_set_x(int32_t value) {
+inline void SCMoveNoti::_internal_set_x(float value) {
   
   _impl_.x_ = value;
 }
-inline void SCMoveNoti::set_x(int32_t value) {
+inline void SCMoveNoti::set_x(float value) {
   _internal_set_x(value);
   // @@protoc_insertion_point(field_set:SCMoveNoti.X)
 }
 
-// int32 Y = 3;
+// float Y = 3;
 inline void SCMoveNoti::clear_y() {
   _impl_.y_ = 0;
 }
-inline int32_t SCMoveNoti::_internal_y() const {
+inline float SCMoveNoti::_internal_y() const {
   return _impl_.y_;
 }
-inline int32_t SCMoveNoti::y() const {
+inline float SCMoveNoti::y() const {
   // @@protoc_insertion_point(field_get:SCMoveNoti.Y)
   return _internal_y();
 }
-inline void SCMoveNoti::_internal_set_y(int32_t value) {
+inline void SCMoveNoti::_internal_set_y(float value) {
   
   _impl_.y_ = value;
 }
-inline void SCMoveNoti::set_y(int32_t value) {
+inline void SCMoveNoti::set_y(float value) {
   _internal_set_y(value);
   // @@protoc_insertion_point(field_set:SCMoveNoti.Y)
+}
+
+// -------------------------------------------------------------------
+
+// CSStopReq
+
+// -------------------------------------------------------------------
+
+// SCStopNoti
+
+// int64 UniqueID = 1;
+inline void SCStopNoti::clear_uniqueid() {
+  _impl_.uniqueid_ = int64_t{0};
+}
+inline int64_t SCStopNoti::_internal_uniqueid() const {
+  return _impl_.uniqueid_;
+}
+inline int64_t SCStopNoti::uniqueid() const {
+  // @@protoc_insertion_point(field_get:SCStopNoti.UniqueID)
+  return _internal_uniqueid();
+}
+inline void SCStopNoti::_internal_set_uniqueid(int64_t value) {
+  
+  _impl_.uniqueid_ = value;
+}
+inline void SCStopNoti::set_uniqueid(int64_t value) {
+  _internal_set_uniqueid(value);
+  // @@protoc_insertion_point(field_set:SCStopNoti.UniqueID)
+}
+
+// float X = 2;
+inline void SCStopNoti::clear_x() {
+  _impl_.x_ = 0;
+}
+inline float SCStopNoti::_internal_x() const {
+  return _impl_.x_;
+}
+inline float SCStopNoti::x() const {
+  // @@protoc_insertion_point(field_get:SCStopNoti.X)
+  return _internal_x();
+}
+inline void SCStopNoti::_internal_set_x(float value) {
+  
+  _impl_.x_ = value;
+}
+inline void SCStopNoti::set_x(float value) {
+  _internal_set_x(value);
+  // @@protoc_insertion_point(field_set:SCStopNoti.X)
+}
+
+// float Y = 3;
+inline void SCStopNoti::clear_y() {
+  _impl_.y_ = 0;
+}
+inline float SCStopNoti::_internal_y() const {
+  return _impl_.y_;
+}
+inline float SCStopNoti::y() const {
+  // @@protoc_insertion_point(field_get:SCStopNoti.Y)
+  return _internal_y();
+}
+inline void SCStopNoti::_internal_set_y(float value) {
+  
+  _impl_.y_ = value;
+}
+inline void SCStopNoti::set_y(float value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:SCStopNoti.Y)
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -5,6 +5,7 @@
 #include "SendBuffer.h"
 #include "Memory.h"
 #include "ClientPacketHandler.h"
+#include "MapManager.h"
 
 GameSession::~GameSession()
 {
@@ -18,6 +19,8 @@ void GameSession::OnConnected()
 
 void GameSession::OnDisconnected()
 {
+	MapManager::GetInstance().Leave(mPlayer);
+
 	GSessionManager.Remove(static_pointer_cast<GameSession>(shared_from_this()));
 }
 

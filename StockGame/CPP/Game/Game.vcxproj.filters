@@ -33,6 +33,9 @@
     <ClCompile Include="ClientPacketHandler.cpp">
       <Filter>Handler</Filter>
     </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSession.h">
@@ -51,6 +54,9 @@
       <Filter>Handler</Filter>
     </ClInclude>
     <ClInclude Include="Enum.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.h">
       <Filter>Contents</Filter>
     </ClInclude>
   </ItemGroup>
