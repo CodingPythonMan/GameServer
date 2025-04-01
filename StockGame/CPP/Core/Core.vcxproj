@@ -40,6 +40,7 @@
     <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="NetAddress.h" />
     <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="PacketSession.h" />
     <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="RefSingleton.h" />
     <ClInclude Include="SendBuffer.h" />
@@ -65,6 +66,7 @@
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="MemoryPool.cpp" />
     <ClCompile Include="NetAddress.cpp" />
+    <ClCompile Include="PacketSession.cpp" />
     <ClCompile Include="RecvBuffer.cpp" />
     <ClCompile Include="SendBuffer.cpp" />
     <ClCompile Include="Service.cpp" />

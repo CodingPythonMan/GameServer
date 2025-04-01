@@ -15,22 +15,35 @@ class IDLCompiler
         return msgName;
     }
 
-    // 핸들러 함수용 메시지 이름은 그대로 사용 (즉, "CSEchoReq", "CSEnterGameReq", "CSMoveReq" 등)
-    static string ProcessHandlerMessageName(string msgName)
-    {
-        return msgName;
-    }
-
     static void Main(string[] args)
     {
-        if (args.Length < 2)
+        // 명령줄 인자 예시:
+        // --proto=./Protocol.proto --out=./Output.h --prefix=CS
+        string protoPath = null!;
+        string headerOutputPath = null!;
+        string prefix = null!;
+
+        foreach (string arg in args)
         {
-            Console.WriteLine("Usage: IDLCompiler <proto_file_path> <output_header_path>");
-            return;
+            if (arg.StartsWith("--proto="))
+            {
+                protoPath = arg.Substring("--proto=".Length);
+            }
+            else if (arg.StartsWith("--out="))
+            {
+                headerOutputPath = arg.Substring("--out=".Length);
+            }
+            else if (arg.StartsWith("--prefix="))
+            {
+                prefix = arg.Substring("--prefix=".Length);
+            }
         }
 
-        string protoPath = args[0];
-        string headerOutputPath = args[1];
+        if (string.IsNullOrEmpty(protoPath) || string.IsNullOrEmpty(headerOutputPath) || string.IsNullOrEmpty(prefix))
+        {
+            Console.WriteLine("Usage: --proto=./Protocol.proto --out=./Output.h --prefix=CS");
+            return;
+        }
 
         if (!File.Exists(protoPath))
         {
@@ -40,14 +53,11 @@ class IDLCompiler
 
         string protoContent = File.ReadAllText(protoPath);
 
-        // .proto 파일에서 'message' 이름 추출 (PacketHeader는 제외)
         var matches = Regex.Matches(protoContent, @"message\s+(\w+)");
         List<string> messages = new List<string>();
         foreach (Match match in matches)
         {
             string msgName = match.Groups[1].Value;
-            if (msgName == "PacketHeader")
-                continue;
             messages.Add(msgName);
         }
 
@@ -56,7 +66,7 @@ class IDLCompiler
         {
             writer.WriteLine("#pragma once");
             writer.WriteLine("#include <functional>");
-            writer.WriteLine("#include \"GameSession.h\"");
+            writer.WriteLine("#include \"PacketSession.h\"");
             writer.WriteLine("#include \"Macro.h\"");
             writer.WriteLine("#include \"CoreGlobal.h\"");
             writer.WriteLine("#include \"SendBuffer.h\"");
@@ -82,11 +92,10 @@ class IDLCompiler
             // 핸들러 프로토타입은 원본 메시지 이름 그대로 사용 (예: "OnCSEchoReq")
             foreach (var msg in messages)
             {
-                // 만약 핸들러를 등록할 메시지가 CS로 시작하는 경우에만 생성합니다.
-                if (msg.StartsWith("CS"))
+                // CS 메시지에 대해서만 핸들러 함수 선언 (필요 시 조건 조정)
+                if (msg.StartsWith(prefix))
                 {
-                    string handlerName = ProcessHandlerMessageName(msg);
-                    writer.WriteLine($"bool On{handlerName}(PacketSessionRef& session, {handlerName}& pkt);");
+                    writer.WriteLine($"bool On{msg}(PacketSessionRef& session, {msg}& pkt);");
                 }
             }
             writer.WriteLine();
@@ -99,15 +108,13 @@ class IDLCompiler
             writer.WriteLine("\t\t{");
             writer.WriteLine("\t\t\tGPacketHandler[i] = Handle_INVALID;");
             writer.WriteLine("\t\t}");
-            // 핸들러 등록 시, enum에서 생성된 이름(예: CS_EchoReq → CS_EchoReq)와
-            // 핸들러 함수 이름(예: OnCSEchoReq)을 사용합니다.
+            // 핸들러 등록 시, enum에서 생성된 이름과 핸들러 함수 이름 사용
             foreach (var msg in messages)
             {
-                if (msg.StartsWith("CS"))
+                if (msg.StartsWith(prefix))
                 {
                     string enumName = ProcessEnumMessageName(msg);
-                    string handlerName = ProcessHandlerMessageName(msg);
-                    writer.WriteLine($"\t\tGPacketHandler[{enumName}] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {{ return HandlePacket<{handlerName}>(On{handlerName}, session, buffer, len); }};");
+                    writer.WriteLine($"\t\tGPacketHandler[{enumName}] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {{ return HandlePacket<{msg}>(On{msg}, session, buffer, len); }};");
                 }
             }
             writer.WriteLine("\t}");
@@ -117,11 +124,12 @@ class IDLCompiler
             writer.WriteLine("\t\tPacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);");
             writer.WriteLine("\t\treturn GPacketHandler[header->id](session, buffer, len);");
             writer.WriteLine("\t}");
+            // SC 메시지 관련 송신 함수 생성 (필요에 따라 조건 수정)
             foreach (var msg in messages)
             {
-                if (msg.StartsWith("SC"))
+                // 옵션에 따라 반대 접두어 메시지에 대해서만 핸들러 함수 선언
+                if ((prefix == "CS" && msg.StartsWith("SC")) || (prefix == "SC" && msg.StartsWith("CS")))
                 {
-                    // enum에서는 ProcessEnumMessageName를 사용하여 SC 패킷의 이름 생성
                     string enumName = ProcessEnumMessageName(msg);
                     writer.WriteLine($"\tstatic SendBufferRef MakeSendBuffer({msg}& pkt) {{ return MakeSendBuffer(pkt, {enumName}); }}");
                 }
