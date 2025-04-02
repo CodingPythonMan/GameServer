@@ -22,34 +22,34 @@ public:
 	virtual ~Service();
 
 	virtual bool	Start() abstract;
-	bool			CanStart() { return _sessionFactory != nullptr; }
+	bool			CanStart() { return mSessionFactory != nullptr; }
 
 	virtual void	CloseService();
-	void			SetSessionFactory(SessionFactory func) { _sessionFactory = func; }
+	void			SetSessionFactory(SessionFactory func) { mSessionFactory = func; }
 
 	void			Broadcast(SendBufferRef sendBuffer);
 	SessionRef		CreateSession();
 	void			AddSession(SessionRef session);
 	void			ReleaseSession(SessionRef session);
-	int32			GetCurrentSessionCount() { return _sessionCount; }
-	int32			GetMaxSessionCount() { return _maxSessionCount; }
+	int32			GetCurrentSessionCount() { return mSessionCount; }
+	int32			GetMaxSessionCount() { return mMaxSessionCount; }
 
 public:
-	ServiceType		GetServiceType() { return _type; }
-	NetAddress		GetNetAddress() { return _netAddress; }
-	IocpCoreRef&	GetIocpCore() { return _iocpCore; }
+	ServiceType		GetServiceType() { return mType; }
+	NetAddress		GetNetAddress() { return mNetAddress; }
+	IocpCoreRef&	GetIocpCore() { return mIocpCore; }
 
 protected:
 	USE_LOCK;
 
-	ServiceType		_type;
-	NetAddress		_netAddress = {};
-	IocpCoreRef		_iocpCore;
+	ServiceType				mType;
+	NetAddress				mNetAddress = {};
+	IocpCoreRef				mIocpCore;
 
-	std::set<SessionRef> _sessions;
-	int32			_sessionCount = 0;
-	int32			_maxSessionCount = 0;
-	SessionFactory	_sessionFactory;
+	std::set<SessionRef>	mSessionList;
+	int32					mSessionCount = 0;
+	int32					mMaxSessionCount = 0;
+	SessionFactory			mSessionFactory;
 };
 
 /*--------------------

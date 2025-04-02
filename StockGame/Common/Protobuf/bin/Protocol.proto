@@ -10,6 +10,7 @@ message SCEchoAck
 	string text = 1;
 }
 
+// 입장
 message CSEnterGameReq
 {
 }
@@ -27,6 +28,7 @@ message SCEnterGameNoti
 	float	Y = 3;
 }
 
+// 움직임
 message CSMoveReq
 {
 	int32	Direction = 1;

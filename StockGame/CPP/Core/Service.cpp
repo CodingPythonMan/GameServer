@@ -4,7 +4,7 @@
 #include "Memory.h"
 
 Service::Service(ServiceType type, NetAddress address, IocpCoreRef core, SessionFactory factory, int32 maxSessioncount)
-	:_type(type), _netAddress(address), _iocpCore(core), _sessionFactory(factory), _maxSessionCount(maxSessioncount)
+	:mType(type), mNetAddress(address), mIocpCore(core), mSessionFactory(factory), mMaxSessionCount(maxSessioncount)
 {
 
 }
@@ -20,7 +20,7 @@ void Service::CloseService()
 void Service::Broadcast(SendBufferRef sendBuffer)
 {
 	WRITE_LOCK;
-	for (const auto& session : _sessions)
+	for (const auto& session : mSessionList)
 	{
 		session->Send(sendBuffer);
 	}
@@ -28,10 +28,10 @@ void Service::Broadcast(SendBufferRef sendBuffer)
 
 SessionRef Service::CreateSession()
 {
-	SessionRef session = _sessionFactory();
+	SessionRef session = mSessionFactory();
 	session->SetService(shared_from_this());
 
-	if (_iocpCore->Register(session) == false)
+	if (mIocpCore->Register(session) == false)
 		return nullptr;
 
 	return session;
@@ -40,15 +40,15 @@ SessionRef Service::CreateSession()
 void Service::AddSession(SessionRef session)
 {
 	WRITE_LOCK;
-	_sessionCount++;
-	_sessions.insert(session);
+	mSessionCount++;
+	mSessionList.insert(session);
 }
 
 void Service::ReleaseSession(SessionRef session)
 {
 	WRITE_LOCK;
-	ASSERT_CRASH(_sessions.erase(session) != 0);
-	_sessionCount--;
+	ASSERT_CRASH(mSessionList.erase(session) != 0);
+	mSessionCount--;
 }
 
 /*--------------------

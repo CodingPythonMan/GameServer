@@ -3,6 +3,7 @@
 #include "Memory.h"
 #include "GameSessionManager.h"
 #include "MapManager.h"
+#include "GameSession.h"
 
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
@@ -36,7 +37,7 @@ bool OnCSEnterGameReq(PacketSessionRef& session, CSEnterGameReq& pkt)
 	// ID 발급 (DB 아이디가 아니고, 인게임 아이디)
 	static std::atomic<int64> idGenerator = 1;
 
-	std::shared_ptr<Player> player = MakeShared<Player>();
+	std::shared_ptr<Player> player = MakeShared<Player>(gameSession);
 	player->mUniqueID = idGenerator++;
 	// Player 이름 대야한다.
 	//player->mName = 
@@ -58,6 +59,9 @@ bool OnCSEnterGameReq(PacketSessionRef& session, CSEnterGameReq& pkt)
 
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(noti);
 	GSessionManager.BroadCast(sendBuffer, gameSession);
+
+	// 주변에 있는 유저들 패킷을 모아서 보내줘야한다.
+	MapManager::GetInstance().SendEnterNoti(player);
 
 	return true;
 }

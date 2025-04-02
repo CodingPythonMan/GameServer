@@ -99,7 +99,14 @@ class IDLCompiler
                 }
             }
             writer.WriteLine();
-            writer.WriteLine("class ClientPacketHandler");
+            if (prefix == "CS")
+            {
+                writer.WriteLine("class ClientPacketHandler");
+            }
+            else
+            {
+                writer.WriteLine("class ServerPacketHandler");
+            }
             writer.WriteLine("{");
             writer.WriteLine("public:");
             writer.WriteLine("\tstatic void Initialize()");

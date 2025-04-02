@@ -13,7 +13,9 @@ public:
 
 	void	Enter(std::shared_ptr<Player> player);
 	void	Leave(std::shared_ptr<Player> player);
-	
+
+	void	SendEnterNoti(std::shared_ptr<Player> player);
+
 public:
 	USE_LOCK;
 

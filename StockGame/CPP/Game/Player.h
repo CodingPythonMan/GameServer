@@ -3,10 +3,12 @@
 #include <memory>
 #include "Macro.h"
 
+class GameSession;
+
 class Player
 {
 public:
-	Player();
+	Player(std::weak_ptr<GameSession> session);
 	virtual ~Player();
 
 	void			Update();
@@ -20,4 +22,6 @@ public:
 	float			mY = 0;
 	bool			mIsMoved = false;
 	EDirection		mDirection = EDirection::LL;
+
+	std::weak_ptr<GameSession>	mSession;
 };

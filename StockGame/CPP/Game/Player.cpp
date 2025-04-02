@@ -1,9 +1,11 @@
 #include "Player.h"
 
-Player::Player()
+Player::Player(std::weak_ptr<GameSession> session)
 {
-	mX = static_cast<float>(rand() % 100);
-	mY = static_cast<float>(rand() % 100);
+    mX = static_cast<float>(rand() % 100);
+    mY = static_cast<float>(rand() % 100);
+    
+    mSession = session;
 }
 
 Player::~Player()

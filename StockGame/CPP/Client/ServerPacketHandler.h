@@ -24,12 +24,13 @@ enum : uint16
 
 // Custom Handlers
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len);
-bool OnCSEchoReq(PacketSessionRef& session, CSEchoReq& pkt);
-bool OnCSEnterGameReq(PacketSessionRef& session, CSEnterGameReq& pkt);
-bool OnCSMoveReq(PacketSessionRef& session, CSMoveReq& pkt);
-bool OnCSStopReq(PacketSessionRef& session, CSStopReq& pkt);
+bool OnSCEchoAck(PacketSessionRef& session, SCEchoAck& pkt);
+bool OnSCEnterGameAck(PacketSessionRef& session, SCEnterGameAck& pkt);
+bool OnSCEnterGameNoti(PacketSessionRef& session, SCEnterGameNoti& pkt);
+bool OnSCMoveNoti(PacketSessionRef& session, SCMoveNoti& pkt);
+bool OnSCStopNoti(PacketSessionRef& session, SCStopNoti& pkt);
 
-class ClientPacketHandler
+class ServerPacketHandler
 {
 public:
 	static void Initialize()
@@ -38,10 +39,11 @@ public:
 		{
 			GPacketHandler[i] = Handle_INVALID;
 		}
-		GPacketHandler[CS_EchoReq] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<CSEchoReq>(OnCSEchoReq, session, buffer, len); };
-		GPacketHandler[CS_EnterGameReq] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<CSEnterGameReq>(OnCSEnterGameReq, session, buffer, len); };
-		GPacketHandler[CS_MoveReq] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<CSMoveReq>(OnCSMoveReq, session, buffer, len); };
-		GPacketHandler[CS_StopReq] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<CSStopReq>(OnCSStopReq, session, buffer, len); };
+		GPacketHandler[SC_EchoAck] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<SCEchoAck>(OnSCEchoAck, session, buffer, len); };
+		GPacketHandler[SC_EnterGameAck] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<SCEnterGameAck>(OnSCEnterGameAck, session, buffer, len); };
+		GPacketHandler[SC_EnterGameNoti] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<SCEnterGameNoti>(OnSCEnterGameNoti, session, buffer, len); };
+		GPacketHandler[SC_MoveNoti] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<SCMoveNoti>(OnSCMoveNoti, session, buffer, len); };
+		GPacketHandler[SC_StopNoti] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<SCStopNoti>(OnSCStopNoti, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -49,11 +51,10 @@ public:
 		PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
 		return GPacketHandler[header->id](session, buffer, len);
 	}
-	static SendBufferRef MakeSendBuffer(SCEchoAck& pkt) { return MakeSendBuffer(pkt, SC_EchoAck); }
-	static SendBufferRef MakeSendBuffer(SCEnterGameAck& pkt) { return MakeSendBuffer(pkt, SC_EnterGameAck); }
-	static SendBufferRef MakeSendBuffer(SCEnterGameNoti& pkt) { return MakeSendBuffer(pkt, SC_EnterGameNoti); }
-	static SendBufferRef MakeSendBuffer(SCMoveNoti& pkt) { return MakeSendBuffer(pkt, SC_MoveNoti); }
-	static SendBufferRef MakeSendBuffer(SCStopNoti& pkt) { return MakeSendBuffer(pkt, SC_StopNoti); }
+	static SendBufferRef MakeSendBuffer(CSEchoReq& pkt) { return MakeSendBuffer(pkt, CS_EchoReq); }
+	static SendBufferRef MakeSendBuffer(CSEnterGameReq& pkt) { return MakeSendBuffer(pkt, CS_EnterGameReq); }
+	static SendBufferRef MakeSendBuffer(CSMoveReq& pkt) { return MakeSendBuffer(pkt, CS_MoveReq); }
+	static SendBufferRef MakeSendBuffer(CSStopReq& pkt) { return MakeSendBuffer(pkt, CS_StopReq); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>
