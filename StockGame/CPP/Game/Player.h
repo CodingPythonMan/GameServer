@@ -1,5 +1,5 @@
 #pragma once
-#include "Enum.h"
+#include "GameEnum.h"
 #include <memory>
 #include "Macro.h"
 

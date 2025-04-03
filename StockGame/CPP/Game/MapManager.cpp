@@ -41,6 +41,8 @@ void MapManager::SendEnterNoti(std::shared_ptr<Player> player)
 		}
 
 		noti.set_uniqueid(playerID);
+		noti.set_direction(static_cast<int32>(otherPlayer->mDirection));
+		noti.set_ismove(otherPlayer->mIsMoved);
 		noti.set_x(otherPlayer->mX);
 		noti.set_y(otherPlayer->mY);
 

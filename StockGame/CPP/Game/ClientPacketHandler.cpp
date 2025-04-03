@@ -72,8 +72,12 @@ bool OnCSMoveReq(PacketSessionRef& session, CSMoveReq& pkt)
 
 	auto player = gameSession->mPlayer;
 
+	// 이제 플레이어는 움직이는 중.
+	player->mIsMoved = true;
+
 	SCMoveNoti noti;
 	noti.set_uniqueid(player->mUniqueID);
+	noti.set_direction(static_cast<int32>(player->mDirection));
 	noti.set_x(player->mX);
 	noti.set_y(player->mY);
 
@@ -88,6 +92,7 @@ bool OnCSStopReq(PacketSessionRef& session, CSStopReq& pkt)
 	std::shared_ptr<GameSession> gameSession = std::static_pointer_cast<GameSession>(session);
 
 	auto player = gameSession->mPlayer;
+	player->mIsMoved = false;
 
 	SCStopNoti noti;
 	noti.set_uniqueid(player->mUniqueID);

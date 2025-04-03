@@ -53,7 +53,7 @@
     <ClInclude Include="ClientPacketHandler.h">
       <Filter>Handler</Filter>
     </ClInclude>
-    <ClInclude Include="Enum.h">
+    <ClInclude Include="GameEnum.h">
       <Filter>Contents</Filter>
     </ClInclude>
     <ClInclude Include="MapManager.h">

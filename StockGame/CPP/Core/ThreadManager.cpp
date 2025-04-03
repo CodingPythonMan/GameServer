@@ -1,5 +1,4 @@
 #include "ThreadManager.h"
-#include <windows.h>
 #include "CoreTLS.h"
 #include "CoreGlobal.h"
 #include "GlobalQueue.h"

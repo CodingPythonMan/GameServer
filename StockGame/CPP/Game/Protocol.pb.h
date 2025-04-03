@@ -791,8 +791,10 @@ class SCEnterGameNoti final :
 
   enum : int {
     kUniqueIDFieldNumber = 1,
-    kXFieldNumber = 2,
-    kYFieldNumber = 3,
+    kDirectionFieldNumber = 2,
+    kIsMoveFieldNumber = 3,
+    kXFieldNumber = 4,
+    kYFieldNumber = 5,
   };
   // int64 UniqueID = 1;
   void clear_uniqueid();
@@ -803,7 +805,25 @@ class SCEnterGameNoti final :
   void _internal_set_uniqueid(int64_t value);
   public:
 
-  // float X = 2;
+  // int32 Direction = 2;
+  void clear_direction();
+  int32_t direction() const;
+  void set_direction(int32_t value);
+  private:
+  int32_t _internal_direction() const;
+  void _internal_set_direction(int32_t value);
+  public:
+
+  // bool IsMove = 3;
+  void clear_ismove();
+  bool ismove() const;
+  void set_ismove(bool value);
+  private:
+  bool _internal_ismove() const;
+  void _internal_set_ismove(bool value);
+  public:
+
+  // float X = 4;
   void clear_x();
   float x() const;
   void set_x(float value);
@@ -812,7 +832,7 @@ class SCEnterGameNoti final :
   void _internal_set_x(float value);
   public:
 
-  // float Y = 3;
+  // float Y = 5;
   void clear_y();
   float y() const;
   void set_y(float value);
@@ -830,6 +850,8 @@ class SCEnterGameNoti final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     int64_t uniqueid_;
+    int32_t direction_;
+    bool ismove_;
     float x_;
     float y_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -1109,8 +1131,9 @@ class SCMoveNoti final :
 
   enum : int {
     kUniqueIDFieldNumber = 1,
-    kXFieldNumber = 2,
-    kYFieldNumber = 3,
+    kDirectionFieldNumber = 2,
+    kXFieldNumber = 3,
+    kYFieldNumber = 4,
   };
   // int64 UniqueID = 1;
   void clear_uniqueid();
@@ -1121,7 +1144,16 @@ class SCMoveNoti final :
   void _internal_set_uniqueid(int64_t value);
   public:
 
-  // float X = 2;
+  // int32 Direction = 2;
+  void clear_direction();
+  int32_t direction() const;
+  void set_direction(int32_t value);
+  private:
+  int32_t _internal_direction() const;
+  void _internal_set_direction(int32_t value);
+  public:
+
+  // float X = 3;
   void clear_x();
   float x() const;
   void set_x(float value);
@@ -1130,7 +1162,7 @@ class SCMoveNoti final :
   void _internal_set_x(float value);
   public:
 
-  // float Y = 3;
+  // float Y = 4;
   void clear_y();
   float y() const;
   void set_y(float value);
@@ -1148,6 +1180,7 @@ class SCMoveNoti final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     int64_t uniqueid_;
+    int32_t direction_;
     float x_;
     float y_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -1630,7 +1663,47 @@ inline void SCEnterGameNoti::set_uniqueid(int64_t value) {
   // @@protoc_insertion_point(field_set:SCEnterGameNoti.UniqueID)
 }
 
-// float X = 2;
+// int32 Direction = 2;
+inline void SCEnterGameNoti::clear_direction() {
+  _impl_.direction_ = 0;
+}
+inline int32_t SCEnterGameNoti::_internal_direction() const {
+  return _impl_.direction_;
+}
+inline int32_t SCEnterGameNoti::direction() const {
+  // @@protoc_insertion_point(field_get:SCEnterGameNoti.Direction)
+  return _internal_direction();
+}
+inline void SCEnterGameNoti::_internal_set_direction(int32_t value) {
+  
+  _impl_.direction_ = value;
+}
+inline void SCEnterGameNoti::set_direction(int32_t value) {
+  _internal_set_direction(value);
+  // @@protoc_insertion_point(field_set:SCEnterGameNoti.Direction)
+}
+
+// bool IsMove = 3;
+inline void SCEnterGameNoti::clear_ismove() {
+  _impl_.ismove_ = false;
+}
+inline bool SCEnterGameNoti::_internal_ismove() const {
+  return _impl_.ismove_;
+}
+inline bool SCEnterGameNoti::ismove() const {
+  // @@protoc_insertion_point(field_get:SCEnterGameNoti.IsMove)
+  return _internal_ismove();
+}
+inline void SCEnterGameNoti::_internal_set_ismove(bool value) {
+  
+  _impl_.ismove_ = value;
+}
+inline void SCEnterGameNoti::set_ismove(bool value) {
+  _internal_set_ismove(value);
+  // @@protoc_insertion_point(field_set:SCEnterGameNoti.IsMove)
+}
+
+// float X = 4;
 inline void SCEnterGameNoti::clear_x() {
   _impl_.x_ = 0;
 }
@@ -1650,7 +1723,7 @@ inline void SCEnterGameNoti::set_x(float value) {
   // @@protoc_insertion_point(field_set:SCEnterGameNoti.X)
 }
 
-// float Y = 3;
+// float Y = 5;
 inline void SCEnterGameNoti::clear_y() {
   _impl_.y_ = 0;
 }
@@ -1718,7 +1791,27 @@ inline void SCMoveNoti::set_uniqueid(int64_t value) {
   // @@protoc_insertion_point(field_set:SCMoveNoti.UniqueID)
 }
 
-// float X = 2;
+// int32 Direction = 2;
+inline void SCMoveNoti::clear_direction() {
+  _impl_.direction_ = 0;
+}
+inline int32_t SCMoveNoti::_internal_direction() const {
+  return _impl_.direction_;
+}
+inline int32_t SCMoveNoti::direction() const {
+  // @@protoc_insertion_point(field_get:SCMoveNoti.Direction)
+  return _internal_direction();
+}
+inline void SCMoveNoti::_internal_set_direction(int32_t value) {
+  
+  _impl_.direction_ = value;
+}
+inline void SCMoveNoti::set_direction(int32_t value) {
+  _internal_set_direction(value);
+  // @@protoc_insertion_point(field_set:SCMoveNoti.Direction)
+}
+
+// float X = 3;
 inline void SCMoveNoti::clear_x() {
   _impl_.x_ = 0;
 }
@@ -1738,7 +1831,7 @@ inline void SCMoveNoti::set_x(float value) {
   // @@protoc_insertion_point(field_set:SCMoveNoti.X)
 }
 
-// float Y = 3;
+// float Y = 4;
 inline void SCMoveNoti::clear_y() {
   _impl_.y_ = 0;
 }

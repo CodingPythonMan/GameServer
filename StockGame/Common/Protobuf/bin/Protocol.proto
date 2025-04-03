@@ -24,8 +24,10 @@ message SCEnterGameAck
 message SCEnterGameNoti
 {
 	int64	UniqueID = 1;
-	float	X = 2;
-	float	Y = 3;
+	int32	Direction = 2;
+	bool	IsMove	= 3;
+	float	X = 4;
+	float	Y = 5;
 }
 
 // ¿òÁ÷ÀÓ
@@ -37,8 +39,9 @@ message CSMoveReq
 message SCMoveNoti
 {
 	int64	UniqueID = 1;
-	float	X = 2;
-	float	Y = 3;
+	int32	Direction = 2;
+	float	X = 3;
+	float	Y = 4;
 }
 
 message CSStopReq

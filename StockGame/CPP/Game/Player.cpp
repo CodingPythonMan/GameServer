@@ -14,6 +14,7 @@ Player::~Player()
 	mX = 0;
 	mY = 0;
 	mIsMoved = false;
+    mDirection = EDirection::LL;
 }
 
 void Player::Update()

@@ -74,6 +74,8 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR SCEnterGameNoti::SCEnterGameNoti(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.uniqueid_)*/int64_t{0}
+  , /*decltype(_impl_.direction_)*/0
+  , /*decltype(_impl_.ismove_)*/false
   , /*decltype(_impl_.x_)*/0
   , /*decltype(_impl_.y_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -102,6 +104,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR SCMoveNoti::SCMoveNoti(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.uniqueid_)*/int64_t{0}
+  , /*decltype(_impl_.direction_)*/0
   , /*decltype(_impl_.x_)*/0
   , /*decltype(_impl_.y_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -180,6 +183,8 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::SCEnterGameNoti, _impl_.uniqueid_),
+  PROTOBUF_FIELD_OFFSET(::SCEnterGameNoti, _impl_.direction_),
+  PROTOBUF_FIELD_OFFSET(::SCEnterGameNoti, _impl_.ismove_),
   PROTOBUF_FIELD_OFFSET(::SCEnterGameNoti, _impl_.x_),
   PROTOBUF_FIELD_OFFSET(::SCEnterGameNoti, _impl_.y_),
   ~0u,  // no _has_bits_
@@ -196,6 +201,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::SCMoveNoti, _impl_.uniqueid_),
+  PROTOBUF_FIELD_OFFSET(::SCMoveNoti, _impl_.direction_),
   PROTOBUF_FIELD_OFFSET(::SCMoveNoti, _impl_.x_),
   PROTOBUF_FIELD_OFFSET(::SCMoveNoti, _impl_.y_),
   ~0u,  // no _has_bits_
@@ -220,10 +226,10 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 14, -1, -1, sizeof(::CSEnterGameReq)},
   { 20, -1, -1, sizeof(::SCEnterGameAck)},
   { 28, -1, -1, sizeof(::SCEnterGameNoti)},
-  { 37, -1, -1, sizeof(::CSMoveReq)},
-  { 44, -1, -1, sizeof(::SCMoveNoti)},
-  { 53, -1, -1, sizeof(::CSStopReq)},
-  { 59, -1, -1, sizeof(::SCStopNoti)},
+  { 39, -1, -1, sizeof(::CSMoveReq)},
+  { 46, -1, -1, sizeof(::SCMoveNoti)},
+  { 56, -1, -1, sizeof(::CSStopReq)},
+  { 62, -1, -1, sizeof(::SCStopNoti)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -242,16 +248,18 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\n\016Protocol.proto\"\031\n\tCSEchoReq\022\014\n\004text\030\001 "
   "\001(\t\"\031\n\tSCEchoAck\022\014\n\004text\030\001 \001(\t\"\020\n\016CSEnte"
   "rGameReq\"&\n\016SCEnterGameAck\022\t\n\001X\030\001 \001(\002\022\t\n"
-  "\001Y\030\002 \001(\002\"9\n\017SCEnterGameNoti\022\020\n\010UniqueID\030"
-  "\001 \001(\003\022\t\n\001X\030\002 \001(\002\022\t\n\001Y\030\003 \001(\002\"\036\n\tCSMoveReq"
-  "\022\021\n\tDirection\030\001 \001(\005\"4\n\nSCMoveNoti\022\020\n\010Uni"
-  "queID\030\001 \001(\003\022\t\n\001X\030\002 \001(\002\022\t\n\001Y\030\003 \001(\002\"\013\n\tCSS"
-  "topReq\"4\n\nSCStopNoti\022\020\n\010UniqueID\030\001 \001(\003\022\t"
-  "\n\001X\030\002 \001(\002\022\t\n\001Y\030\003 \001(\002b\006proto3"
+  "\001Y\030\002 \001(\002\"\\\n\017SCEnterGameNoti\022\020\n\010UniqueID\030"
+  "\001 \001(\003\022\021\n\tDirection\030\002 \001(\005\022\016\n\006IsMove\030\003 \001(\010"
+  "\022\t\n\001X\030\004 \001(\002\022\t\n\001Y\030\005 \001(\002\"\036\n\tCSMoveReq\022\021\n\tD"
+  "irection\030\001 \001(\005\"G\n\nSCMoveNoti\022\020\n\010UniqueID"
+  "\030\001 \001(\003\022\021\n\tDirection\030\002 \001(\005\022\t\n\001X\030\003 \001(\002\022\t\n\001"
+  "Y\030\004 \001(\002\"\013\n\tCSStopReq\"4\n\nSCStopNoti\022\020\n\010Un"
+  "iqueID\030\001 \001(\003\022\t\n\001X\030\002 \001(\002\022\t\n\001Y\030\003 \001(\002b\006prot"
+  "o3"
   ;
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 348, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 402, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, nullptr, 0, 9,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -963,6 +971,8 @@ SCEnterGameNoti::SCEnterGameNoti(const SCEnterGameNoti& from)
   SCEnterGameNoti* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.uniqueid_){}
+    , decltype(_impl_.direction_){}
+    , decltype(_impl_.ismove_){}
     , decltype(_impl_.x_){}
     , decltype(_impl_.y_){}
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -980,6 +990,8 @@ inline void SCEnterGameNoti::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.uniqueid_){int64_t{0}}
+    , decltype(_impl_.direction_){0}
+    , decltype(_impl_.ismove_){false}
     , decltype(_impl_.x_){0}
     , decltype(_impl_.y_){0}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -1029,17 +1041,33 @@ const char* SCEnterGameNoti::_InternalParse(const char* ptr, ::_pbi::ParseContex
         } else
           goto handle_unusual;
         continue;
-      // float X = 2;
+      // int32 Direction = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.direction_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool IsMove = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.ismove_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // float X = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 37)) {
           _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
           goto handle_unusual;
         continue;
-      // float Y = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
+      // float Y = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 45)) {
           _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
@@ -1080,24 +1108,36 @@ uint8_t* SCEnterGameNoti::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_uniqueid(), target);
   }
 
-  // float X = 2;
+  // int32 Direction = 2;
+  if (this->_internal_direction() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_direction(), target);
+  }
+
+  // bool IsMove = 3;
+  if (this->_internal_ismove() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(3, this->_internal_ismove(), target);
+  }
+
+  // float X = 4;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_x = this->_internal_x();
   uint32_t raw_x;
   memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
   if (raw_x != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_x(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(4, this->_internal_x(), target);
   }
 
-  // float Y = 3;
+  // float Y = 5;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_y = this->_internal_y();
   uint32_t raw_y;
   memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
   if (raw_y != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_y(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(5, this->_internal_y(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1121,7 +1161,17 @@ size_t SCEnterGameNoti::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_uniqueid());
   }
 
-  // float X = 2;
+  // int32 Direction = 2;
+  if (this->_internal_direction() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_direction());
+  }
+
+  // bool IsMove = 3;
+  if (this->_internal_ismove() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // float X = 4;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_x = this->_internal_x();
   uint32_t raw_x;
@@ -1130,7 +1180,7 @@ size_t SCEnterGameNoti::ByteSizeLong() const {
     total_size += 1 + 4;
   }
 
-  // float Y = 3;
+  // float Y = 5;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_y = this->_internal_y();
   uint32_t raw_y;
@@ -1159,6 +1209,12 @@ void SCEnterGameNoti::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const 
 
   if (from._internal_uniqueid() != 0) {
     _this->_internal_set_uniqueid(from._internal_uniqueid());
+  }
+  if (from._internal_direction() != 0) {
+    _this->_internal_set_direction(from._internal_direction());
+  }
+  if (from._internal_ismove() != 0) {
+    _this->_internal_set_ismove(from._internal_ismove());
   }
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_x = from._internal_x();
@@ -1400,6 +1456,7 @@ SCMoveNoti::SCMoveNoti(const SCMoveNoti& from)
   SCMoveNoti* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.uniqueid_){}
+    , decltype(_impl_.direction_){}
     , decltype(_impl_.x_){}
     , decltype(_impl_.y_){}
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -1417,6 +1474,7 @@ inline void SCMoveNoti::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.uniqueid_){int64_t{0}}
+    , decltype(_impl_.direction_){0}
     , decltype(_impl_.x_){0}
     , decltype(_impl_.y_){0}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -1466,17 +1524,25 @@ const char* SCMoveNoti::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
         } else
           goto handle_unusual;
         continue;
-      // float X = 2;
+      // int32 Direction = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.direction_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // float X = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
           _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
           goto handle_unusual;
         continue;
-      // float Y = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
+      // float Y = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 37)) {
           _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
@@ -1517,24 +1583,30 @@ uint8_t* SCMoveNoti::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_uniqueid(), target);
   }
 
-  // float X = 2;
+  // int32 Direction = 2;
+  if (this->_internal_direction() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_direction(), target);
+  }
+
+  // float X = 3;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_x = this->_internal_x();
   uint32_t raw_x;
   memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
   if (raw_x != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_x(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_x(), target);
   }
 
-  // float Y = 3;
+  // float Y = 4;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_y = this->_internal_y();
   uint32_t raw_y;
   memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
   if (raw_y != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_y(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(4, this->_internal_y(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1558,7 +1630,12 @@ size_t SCMoveNoti::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_uniqueid());
   }
 
-  // float X = 2;
+  // int32 Direction = 2;
+  if (this->_internal_direction() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_direction());
+  }
+
+  // float X = 3;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_x = this->_internal_x();
   uint32_t raw_x;
@@ -1567,7 +1644,7 @@ size_t SCMoveNoti::ByteSizeLong() const {
     total_size += 1 + 4;
   }
 
-  // float Y = 3;
+  // float Y = 4;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_y = this->_internal_y();
   uint32_t raw_y;
@@ -1596,6 +1673,9 @@ void SCMoveNoti::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
 
   if (from._internal_uniqueid() != 0) {
     _this->_internal_set_uniqueid(from._internal_uniqueid());
+  }
+  if (from._internal_direction() != 0) {
+    _this->_internal_set_direction(from._internal_direction());
   }
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_x = from._internal_x();
