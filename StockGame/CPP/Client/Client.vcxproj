@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameEnum.h" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Protocol.pb.cc" />
     <ClCompile Include="ServerPacketHandler.cpp" />

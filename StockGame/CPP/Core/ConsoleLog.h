@@ -1,5 +1,6 @@
 #pragma once
 #include <windows.h>
+#include <string>
 
 enum class Color
 {
@@ -20,11 +21,12 @@ public:
 	~ConsoleLog();
 
 public:
-	void		WriteStdOut(Color color, const WCHAR* str, ...);
-	void		WriteStdErr(Color color, const WCHAR* str, ...);
+	void			WriteStdOut(Color color, const WCHAR* str, ...);
+	void			WriteStdErr(Color color, const WCHAR* str, ...);
 
 protected:
-	void		SetColor(bool stdOut, Color color);
+	void			SetColor(bool stdOut, Color color);
+	std::wstring	_GetCurrentTimestamp();
 
 private:
 	HANDLE		_stdOut;

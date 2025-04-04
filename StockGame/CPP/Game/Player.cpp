@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <iostream>
 
 Player::Player(std::weak_ptr<GameSession> session)
 {
@@ -17,7 +18,7 @@ Player::~Player()
     mDirection = EDirection::LL;
 }
 
-void Player::Update()
+void Player::Update(float deltaTime)
 {
 	if (mIsMoved == false)
 	{
@@ -61,15 +62,15 @@ void Player::Update()
         break;
     }
 
-    // 이동 벡터 정규화 (대각선 이동 시에도 동일한 이동량이 되도록)
-    float length = static_cast<float>(sqrt(moveX * moveX + moveY * moveY));
-    if (length != 0.0f)
+    // 정규화
+    float length = sqrtf(moveX * moveX + moveY * moveY);
+    if (length > 0.0f)
     {
         moveX /= length;
         moveY /= length;
     }
 
-    // 만약 mSpeed(혹은 tick 당 이동량)를 곱해서 이동시키고 싶다면 추가
-    mX += moveX; // 또는 mX += moveX * mSpeed;
-    mY += moveY; // 또는 mY += moveY * mSpeed;
+    // 이동량 = 속도 * 시간
+    mX += moveX * mSpeed * deltaTime;
+    mY += moveY * mSpeed * deltaTime;
 }

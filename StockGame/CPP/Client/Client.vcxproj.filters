@@ -10,6 +10,9 @@
     <Filter Include="Handler">
       <UniqueIdentifier>{88824784-fc4c-4dc7-a622-d3c2594ffd25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents">
+      <UniqueIdentifier>{0f646c00-c48a-41b9-885a-46e568931751}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -23,6 +26,9 @@
     </ClCompile>
     <ClCompile Include="ServerPacketHandler.cpp">
       <Filter>Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEnum.h">
+      <Filter>Contents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

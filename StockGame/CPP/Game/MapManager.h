@@ -9,7 +9,7 @@ class Player;
 class MapManager : public RefSingleton<MapManager>
 {
 public:
-	void	Update();
+	void	Update(float deltaTime);
 
 	void	Enter(std::shared_ptr<Player> player);
 	void	Leave(std::shared_ptr<Player> player);

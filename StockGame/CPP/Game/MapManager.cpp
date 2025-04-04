@@ -3,12 +3,12 @@
 #include "ClientPacketHandler.h"
 #include "GameSession.h"
 
-void MapManager::Update()
+void MapManager::Update(float deltaTime)
 {
 	READ_LOCK;
 	for (auto [uid, player] : mPlayerList)
 	{
-		player->Update();
+		player->Update(deltaTime);
 	}
 }
 

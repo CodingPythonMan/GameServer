@@ -32,7 +32,7 @@ int main()
 	ClientPacketHandler::Initialize();
 
 	ServerServiceRef service = MakeShared<ServerService>(
-		NetAddress(L"127.0.0.1", 1537),
+		NetAddress(L"10.0.0.25", 1537),
 		MakeShared<IocpCore>(),
 		MakeShared<GameSession>,
 		10);
@@ -52,16 +52,20 @@ int main()
 	}
 
 	GThreadManager->Launch([]() {
+		uint64 lastTick = ::GetTickCount64();
+
 		while (true)
 		{
-			const uint64 startTick = ::GetTickCount64();
+			uint64 now = ::GetTickCount64();
+			uint64 delta = now - lastTick;
+			lastTick = now;
 
-			// MapManager의 Update 호출
-			MapManager::GetInstance().Update();
+			float deltaTime = delta / 1000.0f;  // 초 단위 변환 (예: 0.02)
 
-			// 20ms마다 실행하도록 간격 조정
+			MapManager::GetInstance().Update(deltaTime);
+
 			const uint64 endTick = ::GetTickCount64();
-			const uint64 elapsed = endTick - startTick;
+			const uint64 elapsed = endTick - now;
 
 			if (elapsed < 20)
 			{

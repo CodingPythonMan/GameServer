@@ -1,5 +1,7 @@
 #include "ConsoleLog.h"
 #include <iostream>
+#include <chrono>
+#include <ctime>
 
 ConsoleLog::ConsoleLog()
 {
@@ -17,6 +19,10 @@ void ConsoleLog::WriteStdOut(Color color, const WCHAR* format, ...)
 		return;
 
 	SetColor(true, color);
+
+	// 타임스탬프 출력
+	std::wstring timestamp = _GetCurrentTimestamp();
+	std::wcout << timestamp;
 
 	va_list ap;
 	va_start(ap, format);
@@ -36,6 +42,10 @@ void ConsoleLog::WriteStdErr(Color color, const WCHAR* format, ...)
 		return;
 
 	SetColor(false, color);
+
+	// 타임스탬프 출력
+	std::wstring timestamp = _GetCurrentTimestamp();
+	std::wcout << timestamp;
 
 	va_list ap;
 	va_start(ap, format);
@@ -61,4 +71,21 @@ void ConsoleLog::SetColor(bool stdOut, Color color)
 	};
 
 	::SetConsoleTextAttribute(stdOut ? _stdOut : _stdErr, SColors[static_cast<INT32>(color)]);
+}
+
+std::wstring ConsoleLog::_GetCurrentTimestamp()
+{
+	auto now = std::chrono::system_clock::now();
+	std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+
+	std::tm time_info;
+#ifdef _WIN32
+	localtime_s(&time_info, &now_c);
+#else
+	localtime_r(&now_c, &time_info);
+#endif
+
+	wchar_t buffer[32];
+	wcsftime(buffer, sizeof(buffer) / sizeof(wchar_t), L"[%Y-%m-%d %H:%M:%S] ", &time_info);
+	return std::wstring(buffer);
 }

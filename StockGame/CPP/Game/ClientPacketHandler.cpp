@@ -4,6 +4,7 @@
 #include "GameSessionManager.h"
 #include "MapManager.h"
 #include "GameSession.h"
+#include "ConsoleLog.h"
 
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
@@ -74,6 +75,7 @@ bool OnCSMoveReq(PacketSessionRef& session, CSMoveReq& pkt)
 
 	// 이제 플레이어는 움직이는 중.
 	player->mIsMoved = true;
+	player->mDirection = static_cast<EDirection>(pkt.direction());
 
 	SCMoveNoti noti;
 	noti.set_uniqueid(player->mUniqueID);
@@ -83,6 +85,8 @@ bool OnCSMoveReq(PacketSessionRef& session, CSMoveReq& pkt)
 
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(noti);
 	GSessionManager.BroadCast(sendBuffer);
+
+	GConsoleLogger->WriteStdOut(Color::WHITE, L">> SCMoveNoti Send!\n");
 
 	return true;
 }
