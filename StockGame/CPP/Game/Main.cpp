@@ -27,8 +27,42 @@ void DoWorkerJob(ServerServiceRef& service)
 	}
 }
 
+constexpr int kCount = 1'000'000;
+constexpr int width = 256;
+
+void TestNewDelete()
+{
+	auto start = std::chrono::high_resolution_clock::now();
+
+	for (int i = 0; i < kCount; ++i)
+	{
+		char* ptr = new char[width];
+		delete[] ptr;
+	}
+
+	auto end = std::chrono::high_resolution_clock::now();
+	std::cout << "new/delete: " << std::chrono::duration<double>(end - start).count() << "s\n";
+}
+
+void TestMemoryPool()
+{
+	auto start = std::chrono::high_resolution_clock::now();
+
+	for (int i = 0; i < kCount; ++i)
+	{
+		void* ptr = GMemory->Allocate(width);
+		GMemory->Release(ptr);
+	}
+
+	auto end = std::chrono::high_resolution_clock::now();
+	std::cout << "GMemory:    " << std::chrono::duration<double>(end - start).count() << "s\n";
+}
+
 int main()
 {
+	TestNewDelete();
+	TestMemoryPool();
+
 	ClientPacketHandler::Initialize();
 
 	ServerServiceRef service = MakeShared<ServerService>(

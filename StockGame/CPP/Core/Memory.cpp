@@ -1,6 +1,7 @@
 #include "Memory.h"
 #include "MemoryPool.h"
 #include "Macro.h"
+#include <iostream>
 
 Memory::Memory()
 {
@@ -10,11 +11,13 @@ Memory::Memory()
 	for (size = 32; size <= 1024; size += 32)
 	{
 		MemoryPool* pool = new MemoryPool(size);
-		_pools.push_back(pool);
+		mPoolList.push_back(pool);
 
+		// ex) tableIndex = 1, MemoryPool(32)
+		// tableIndex = 2, MemoryPool(64)...
 		while (tableIndex <= size)
 		{
-			_poolTable[tableIndex] = pool;
+			mPoolTable[tableIndex] = pool;
 			tableIndex++;
 		}
 	}
@@ -22,11 +25,11 @@ Memory::Memory()
 	for (; size <= 2048; size += 128)
 	{
 		MemoryPool* pool = new MemoryPool(size);
-		_pools.push_back(pool);
+		mPoolList.push_back(pool);
 
 		while (tableIndex <= size)
 		{
-			_poolTable[tableIndex] = pool;
+			mPoolTable[tableIndex] = pool;
 			tableIndex++;
 		}
 	}
@@ -34,11 +37,11 @@ Memory::Memory()
 	for (; size <= 4096; size += 256)
 	{
 		MemoryPool* pool = new MemoryPool(size);
-		_pools.push_back(pool);
+		mPoolList.push_back(pool);
 
 		while (tableIndex <= size)
 		{
-			_poolTable[tableIndex] = pool;
+			mPoolTable[tableIndex] = pool;
 			tableIndex++;
 		}
 	}
@@ -46,16 +49,18 @@ Memory::Memory()
 
 Memory::~Memory()
 {
-	for (MemoryPool* pool : _pools)
+	for (MemoryPool* pool : mPoolList)
+	{
 		delete pool;
+	}
 
-	_pools.clear();
+	mPoolList.clear();
 }
 
 void* Memory::Allocate(int32 size)
 {
 	MemoryHeader* header = nullptr;
-	const int32 allocSize = size * sizeof(MemoryHeader);
+	const int32 allocSize = size + sizeof(MemoryHeader);
 	if (allocSize > MAX_ALLOC_SIZE)
 	{
 		// 메모리 풀링 최대 크기를 벗어나면 일반 할당
@@ -64,7 +69,7 @@ void* Memory::Allocate(int32 size)
 	else
 	{
 		// 메모리 풀에서 꺼내온다.
-		header = _poolTable[allocSize]->Pop();
+		header = mPoolTable[allocSize]->Pop();
 	}
 
 	return MemoryHeader::AttachHeader(header, allocSize);
@@ -85,6 +90,6 @@ void Memory::Release(void* ptr)
 	else
 	{
 		// 메모리 풀에 반납한다.
-		_poolTable[allocSize]->Push(header);
+		mPoolTable[allocSize]->Push(header);
 	}
 }

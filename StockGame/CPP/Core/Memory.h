@@ -22,12 +22,12 @@ public:
 	void	Release(void* ptr);
 
 private:
-	std::vector<MemoryPool*> _pools;
+	std::vector<MemoryPool*> mPoolList;
 
 	// 메모리 크기 <-> 메모리 풀
 	// O(1) 빠르게 찾기 위한 테이블
 	// 0 - 32
-	MemoryPool* _poolTable[MAX_ALLOC_SIZE + 1];
+	MemoryPool* mPoolTable[MAX_ALLOC_SIZE + 1];
 };
 
 template<typename Type, typename... Args>
