@@ -17,51 +17,48 @@ void ServerSession::OnConnected()
 		GetPacketSessionRef()->Send(sendBuffer);
 	}
 
-	while (true)
+	Sleep(100);
+
 	{
-		Sleep(3000);
+		CSMoveReq req;
+		req.set_direction(static_cast<int32>(EDirection::RR));
+		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
+		GetPacketSessionRef()->Send(sendBuffer);
+	}
 
-		{
-			CSMoveReq req;
-			req.set_direction(static_cast<int32>(EDirection::RR));
-			auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
-			GetPacketSessionRef()->Send(sendBuffer);
-		}
+	Sleep(100);
 
-		Sleep(3000);
+	{
+		CSMoveReq req;
+		req.set_direction(static_cast<int32>(EDirection::DD));
+		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
+		GetPacketSessionRef()->Send(sendBuffer);
+	}
 
-		{
-			CSMoveReq req;
-			req.set_direction(static_cast<int32>(EDirection::DD));
-			auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
-			GetPacketSessionRef()->Send(sendBuffer);
-		}
+	Sleep(100);
 
-		Sleep(3000);
+	{
+		CSMoveReq req;
+		req.set_direction(static_cast<int32>(EDirection::LL));
+		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
+		GetPacketSessionRef()->Send(sendBuffer);
+	}
 
-		{
-			CSMoveReq req;
-			req.set_direction(static_cast<int32>(EDirection::LL));
-			auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
-			GetPacketSessionRef()->Send(sendBuffer);
-		}
+	Sleep(100);
 
-		Sleep(3000);
+	{
+		CSMoveReq req;
+		req.set_direction(static_cast<int32>(EDirection::UU));
+		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
+		GetPacketSessionRef()->Send(sendBuffer);
+	}
 
-		{
-			CSMoveReq req;
-			req.set_direction(static_cast<int32>(EDirection::UU));
-			auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
-			GetPacketSessionRef()->Send(sendBuffer);
-		}
+	Sleep(100);
 
-		Sleep(3000);
-
-		{
-			CSStopReq req;
-			auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
-			GetPacketSessionRef()->Send(sendBuffer);
-		}
+	{
+		CSStopReq req;
+		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
+		GetPacketSessionRef()->Send(sendBuffer);
 	}
 }
 

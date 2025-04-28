@@ -86,8 +86,6 @@ bool OnCSMoveReq(PacketSessionRef& session, CSMoveReq& pkt)
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(noti);
 	GSessionManager.BroadCast(sendBuffer);
 
-	GConsoleLogger->WriteStdOut(Color::WHITE, L">> SCMoveNoti Send!\n");
-
 	return true;
 }
 
