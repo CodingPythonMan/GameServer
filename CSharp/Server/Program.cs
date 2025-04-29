@@ -1,20 +1,21 @@
 ﻿using Akka.Actor;
-using Server;
+using Akka.Routing;
 
 class Program
 {
     static async Task Main(string[] args)
     {
-        // 1. 액터 시스템 생성
-        var system = ActorSystem.Create("helloWorldSystem");
+        var system = ActorSystem.Create("LogSystem");
 
-        // 2. 액터 생성
-        var helloActor = system.ActorOf<HelloActor>("helloActor");
+        var fileWriter = system.ActorOf<FileWriterActor>("FileWriter");
 
-        // 3. 메세지 전송
-        helloActor.Tell("Akka.NET");
+        // 현재 DBWriter 는 각각의 DB 연결을 가지고 있으므로, DB 연결을 꼭 여러개 할 필요는 없다.
+        // 나중에 수정 필요
+        var dbWriter = system.ActorOf(Props.Create(() => new DBWriterActor(fileWriter)).WithRouter(new RoundRobinPool(10)), "DBWriterPool");
+        
+        var logReceiver = system.ActorOf(Props.Create(() => new LogReceiverActor(fileWriter, dbWriter)), "LogReceiver");
 
-        await Task.Delay(1000);
+        await Task.Delay(Timeout.InfiniteTimeSpan);
 
         await system.Terminate();
     }
