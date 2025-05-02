@@ -138,15 +138,72 @@ public class LogReceiverActor : ReceiveActor
 
         switch (messageID)
         {
-            case (int)EMessageID.NetConnect:
-                var message = NetConnect.Parser.ParseFrom(actualBody);
-                Console.WriteLine($"[NetConnect] ServerID: {message.ServerID}, IP: {message.ConnectIP}");
+            case (int)EInnerMessageID.LogPlaytime:
+                mDBWriter.Tell(LogPlaytime.Parser.ParseFrom(actualBody));
                 break;
+
+            case (int)EInnerMessageID.LogCreateHero:
+                mDBWriter.Tell(LogCreateHero.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogDeleteHero:
+                mDBWriter.Tell(LogDeleteHero.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogDeserializeFail:
+                mDBWriter.Tell(LogDeserializeFail.Parser.ParseFrom(actualBody));
+                break;
+
             case (int)EInnerMessageID.LogLogin:
-                var logLogin = LogLogin.Parser.ParseFrom(actualBody);
                 Console.WriteLine($"[Packet] LogLogin 수신");
-                mDBWriter.Tell(logLogin);
+                mDBWriter.Tell(LogLogin.Parser.ParseFrom(actualBody));
                 break;
+
+            case (int)EInnerMessageID.LogDebug:
+                mDBWriter.Tell(LogDebug.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogExchangeRegister:
+                mDBWriter.Tell(LogExchangeRegister.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogExchangeDeregister:
+                mDBWriter.Tell(LogExchangeDeregister.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogExchangeReregister:
+                mDBWriter.Tell(LogExchangeReregister.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogExchangeBuy:
+                mDBWriter.Tell(LogExchangeBuy.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogExchangeCalculate:
+                mDBWriter.Tell(LogExchangeCalculate.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogQuestCompleteMission:
+                mDBWriter.Tell(LogQuestCompleteMission.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogQuestGiveUpMission:
+                mDBWriter.Tell(LogQuestGiveUpMission.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogMonsterSpawn:
+                mDBWriter.Tell(LogMonsterSpawn.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EInnerMessageID.LogMonsterKill:
+                mDBWriter.Tell(LogMonsterKill.Parser.ParseFrom(actualBody));
+                break;
+
+            case (int)EMessageID.NetConnect:
+                var netConnect = NetConnect.Parser.ParseFrom(actualBody);
+                Console.WriteLine($"[NetConnect] ServerID: {netConnect.ServerID}, IP: {netConnect.ConnectIP}");
+                break;
+
             default:
                 Console.WriteLine($"[Packet] 알 수 없는 메시지 ID: {messageID}");
                 break;

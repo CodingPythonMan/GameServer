@@ -11,7 +11,7 @@ public class FileWriterActor : ReceiveActor
     {
         Receive<string>(message =>
         {
-            Console.WriteLine($"[FileWriter] 파일에 저장: {message}");
+            Console.WriteLine($"[FileWriter] : {message}");
         });
     }
 }

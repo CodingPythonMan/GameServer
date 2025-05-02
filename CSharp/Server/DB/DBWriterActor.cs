@@ -206,7 +206,6 @@ public class DBWriterActor : ReceiveActor
         {
             mConnection = new SqlConnection("Server=127.0.0.1,1433;Database=Test;User Id=Robo;Password=1234;TrustServerCertificate=True;");
             mConnection.Open();
-            mFileWriter.Tell("DB 연결 성공!");
         }
         catch(Exception ex) 
         {
