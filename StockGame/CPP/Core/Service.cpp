@@ -31,8 +31,10 @@ SessionRef Service::CreateSession()
 	SessionRef session = mSessionFactory();
 	session->SetService(shared_from_this());
 
-	if (mIocpCore->Register(session) == false)
+	if (false == mIocpCore->Register(session))
+	{
 		return nullptr;
+	}
 
 	return session;
 }
@@ -63,14 +65,18 @@ ClientService::ClientService(NetAddress targetAddress, IocpCoreRef core, Session
 bool ClientService::Start()
 {
 	if (CanStart() == false)
+	{
 		return false;
+	}
 
 	const int32 sessionCount = GetMaxSessionCount();
 	for (int32 i = 0; i < sessionCount; i++)
 	{
 		SessionRef session = CreateSession();
-		if (session->Connect() == false)
+		if (false == session->Connect())
+		{
 			return false;
+		}
 	}
 
 	return true;

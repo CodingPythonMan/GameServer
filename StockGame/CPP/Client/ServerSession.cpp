@@ -11,54 +11,61 @@ ServerSession::~ServerSession()
 
 void ServerSession::OnConnected()
 {
+	// Connect 가 되면, 그 때 객체를 생성해서 객체가 움직이게 하면 되긴한다.
+	// C++ Client 는 봇이라고 봐야한다.
+
+
 	{
 		CSEnterGameReq req;
 		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
 		GetPacketSessionRef()->Send(sendBuffer);
 	}
 
-	Sleep(100);
-
+	while (true)
 	{
-		CSMoveReq req;
-		req.set_direction(static_cast<int32>(EDirection::RR));
-		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
-		GetPacketSessionRef()->Send(sendBuffer);
-	}
+		Sleep(3000);
 
-	Sleep(100);
+		{
+			CSMoveReq req;
+			req.set_direction(static_cast<int32>(EDirection::RR));
+			auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
+			GetPacketSessionRef()->Send(sendBuffer);
+		}
 
-	{
-		CSMoveReq req;
-		req.set_direction(static_cast<int32>(EDirection::DD));
-		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
-		GetPacketSessionRef()->Send(sendBuffer);
-	}
+		Sleep(3000);
 
-	Sleep(100);
+		{
+			CSMoveReq req;
+			req.set_direction(static_cast<int32>(EDirection::DD));
+			auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
+			GetPacketSessionRef()->Send(sendBuffer);
+		}
 
-	{
-		CSMoveReq req;
-		req.set_direction(static_cast<int32>(EDirection::LL));
-		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
-		GetPacketSessionRef()->Send(sendBuffer);
-	}
+		Sleep(3000);
 
-	Sleep(100);
+		{
+			CSMoveReq req;
+			req.set_direction(static_cast<int32>(EDirection::LL));
+			auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
+			GetPacketSessionRef()->Send(sendBuffer);
+		}
 
-	{
-		CSMoveReq req;
-		req.set_direction(static_cast<int32>(EDirection::UU));
-		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
-		GetPacketSessionRef()->Send(sendBuffer);
-	}
+		Sleep(3000);
 
-	Sleep(100);
+		{
+			CSMoveReq req;
+			req.set_direction(static_cast<int32>(EDirection::UU));
+			auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
+			GetPacketSessionRef()->Send(sendBuffer);
+		}
 
-	{
-		CSStopReq req;
-		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
-		GetPacketSessionRef()->Send(sendBuffer);
+		Sleep(3000);
+
+		{
+			CSStopReq req;
+			auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
+			GetPacketSessionRef()->Send(sendBuffer);
+		}
 	}
 }
 
