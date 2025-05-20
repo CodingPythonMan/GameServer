@@ -23,7 +23,7 @@
     <ClInclude Include="ConsoleLog.h" />
     <ClInclude Include="CoreGlobal.h" />
     <ClInclude Include="DBConnectionInfo.h" />
-    <ClInclude Include="DBService.h" />
+    <ClInclude Include="DBManager.h" />
     <ClInclude Include="Lock.h" />
     <ClInclude Include="BlockingQueue.h" />
     <ClInclude Include="Macro.h" />
@@ -56,7 +56,7 @@
     <ClCompile Include="ConsoleLog.cpp" />
     <ClCompile Include="CoreGlobal.cpp" />
     <ClCompile Include="CoreTLS.cpp" />
-    <ClCompile Include="DBService.cpp" />
+    <ClCompile Include="DBManager.cpp" />
     <ClCompile Include="GlobalQueue.cpp" />
     <ClCompile Include="IocpCore.cpp" />
     <ClCompile Include="IocpEvent.cpp" />

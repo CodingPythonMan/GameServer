@@ -108,9 +108,6 @@
     <ClInclude Include="DBConnectionInfo.h">
       <Filter>DB</Filter>
     </ClInclude>
-    <ClInclude Include="DBService.h">
-      <Filter>DB</Filter>
-    </ClInclude>
     <ClInclude Include="RefSingleton.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -119,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="Monitoring.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="DBManager.h">
+      <Filter>DB</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,11 +182,11 @@
     <ClCompile Include="SocketUtils.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="DBService.cpp">
-      <Filter>DB</Filter>
-    </ClCompile>
     <ClCompile Include="PacketSession.cpp">
       <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="DBManager.cpp">
+      <Filter>DB</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

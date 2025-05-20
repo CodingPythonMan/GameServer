@@ -35,7 +35,9 @@ void JobQueue::Execute()
 
 		const int32 jobCount = static_cast<int32>(jobs.size());
 		for (int32 i = 0; i < jobCount; i++)
+		{
 			jobs[i]->Execute();
+		}
 
 		// 남은 일감이 0개라면 종료
 		if (mJobCount.fetch_sub(jobCount) == jobCount)
@@ -49,6 +51,7 @@ void JobQueue::Execute()
 		{
 			LCurrentJobQueue = nullptr;
 			// 여유 있는 다른 쓰레드가 실행하도록 GlobalQueue 에 넘긴다.
+			// 근데 이게 싫다면? 
 			GGlobalQueue->Push(shared_from_this());
 			break;
 		}

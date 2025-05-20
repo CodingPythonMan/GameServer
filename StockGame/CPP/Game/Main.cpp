@@ -4,7 +4,7 @@
 #include "CoreGlobal.h"
 #include "ThreadManager.h"
 #include "Service.h"
-#include "DBService.h"
+#include "DBManager.h"
 #include "ClientPacketHandler.h"
 #include "MapManager.h"
 #include "Monitoring.h"
@@ -41,8 +41,7 @@ int main()
 	ASSERT_CRASH(service->Start());
 
 	// 자!!! Poco 를 한번 사용해보자.
-	//DBService dbService;
-	//dbService.Start();
+	//DBManager::GetInstance().Init();
 
 	for (int32 i = 0; i < 5; i++)
 	{

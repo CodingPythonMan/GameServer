@@ -28,7 +28,9 @@ void JobTimer::Distribute(uint64 now)
 		{
 			const TimerItem& timerItem = mItemList.top();
 			if (now < timerItem.mExecuteTick)
+			{
 				break;
+			}
 
 			items.push_back(timerItem);
 			mItemList.pop();

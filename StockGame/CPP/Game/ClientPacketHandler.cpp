@@ -5,6 +5,7 @@
 #include "MapManager.h"
 #include "GameSession.h"
 #include "ConsoleLog.h"
+#include "DBManager.h"
 
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
@@ -45,6 +46,11 @@ bool OnCSEnterGameReq(PacketSessionRef& session, CSEnterGameReq& pkt)
 	gameSession->mPlayer = player;
 
 	MapManager::GetInstance().Enter(player);
+
+	// DB Work 를 통해, 해당 좌표를 불러와서 붙여줘도 괜찮다.
+	// 이걸 어떻게 구현해볼까?
+	// 이미 정말 스레드는 꽤 돌아가고 있다... DBService 를 따로 뺀다?
+	//DBManager::GetInstance().
 
 	SCEnterGameAck ack;
 	ack.set_x(player->mX);
