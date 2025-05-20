@@ -3,6 +3,7 @@
 #include "CoreGlobal.h"
 #include "GlobalQueue.h"
 #include "JobQueue.h"
+#include "Monitoring.h"
 
 ThreadManager::ThreadManager()
 {
@@ -42,6 +43,10 @@ void ThreadManager::InitTLS()
 {
 	static std::atomic<uint32> SThreadId = 1;
 	LThreadId = SThreadId.fetch_add(1);
+
+	thread_local MonitorData monitor;
+	LMonitorData = &monitor;
+	Monitoring::GetInstance().RegisterData(LMonitorData);
 }
 
 void ThreadManager::DestroyTLS()

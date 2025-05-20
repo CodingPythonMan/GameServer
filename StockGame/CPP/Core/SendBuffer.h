@@ -12,16 +12,17 @@ public:
 	SendBuffer(SendBufferChunkRef owner, BYTE* buffer, uint32 allocSize);
 	~SendBuffer();
 
-	BYTE*			Buffer() { return _buffer; }
-	uint32			AllocSize() { return _allocSize; }
-	uint32			WriteSize() { return _writeSize; }
+	BYTE*			Buffer() { return mBuffer; }
+	uint32			AllocSize() { return mAllocSize; }
+	uint32			WriteSize() { return mWriteSize; }
 	void			Close(uint32 writeSize);
 
 private:
-	BYTE*				_buffer;
-	uint32				_allocSize = 0;
-	uint32				_writeSize = 0;
-	SendBufferChunkRef	_owner;
+	BYTE*				mBuffer;
+	uint32				mAllocSize = 0;
+	uint32				mWriteSize = 0;
+	SendBufferChunkRef	mOwner;
+	
 };
 
 class SendBufferChunk : public std::enable_shared_from_this<SendBufferChunk>
@@ -39,14 +40,14 @@ public:
 	SendBufferRef	Open(uint32 allocSize);
 	void			Close(uint32 writeSize);
 
-	bool			IsOpen() { return _open; }
-	BYTE*			Buffer() { return &mBuffer[_usedSize]; }
-	uint32			FreeSize() { return static_cast<uint32>(mBuffer.size()) - _usedSize; }
+	bool			IsOpen() { return mIsOpen; }
+	BYTE*			Buffer() { return &mBuffer[mUsedSize]; }
+	uint32			FreeSize() { return static_cast<uint32>(mBuffer.size()) - mUsedSize; }
 
 private:
 	std::array<BYTE, SEND_BUFFER_CHUNK_SIZE>		mBuffer = {};
-	bool									_open = false;
-	uint32									_usedSize = 0;
+	bool											mIsOpen = false;
+	uint32											mUsedSize = 0;
 };
 
 class SendBufferManager
@@ -62,5 +63,5 @@ private:
 
 private:
 	USE_LOCK;
-	std::vector<SendBufferChunkRef> _sendBufferChunks;
+	std::vector<SendBufferChunkRef> mSendBufferChunks;
 };

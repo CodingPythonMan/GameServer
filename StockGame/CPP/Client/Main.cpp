@@ -15,7 +15,7 @@ int main()
 
 	service->Start();
 
-	for (int32 i = 0; i < 100; i++)
+	for (int32 i = 0; i < 5; i++)
 	{
 		GThreadManager->Launch([=]()
 			{

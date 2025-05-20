@@ -4,7 +4,8 @@
 #include "CoreGlobal.h"
 #include "ConsoleLog.h"
 #include "SendBuffer.h"
-#include <iostream>
+#include "CoreTLS.h"
+#include "Monitoring.h"
 
 Session::Session() : mRecvBuffer(BUFFER_SIZE)
 {
@@ -182,16 +183,18 @@ void Session::RegisterSend()
 	mSendEvent.Initialize();
 	mSendEvent.mOwner = shared_from_this();
 
+	// 모니터링용
+	int32 packetCount = 0;
 	// 보낼 데이터를 sendEvent에 등록
 	{
 		WRITE_LOCK;
-
 		int32 writeSize = 0;
 		while (mSendQueue.empty() == false)
 		{
 			SendBufferRef sendBuffer = mSendQueue.front();
 
 			writeSize += sendBuffer->WriteSize();
+			packetCount++;
 			// TODO: 예외 체크
 
 			mSendQueue.pop();
@@ -221,6 +224,10 @@ void Session::RegisterSend()
 			mSendEvent.mSendBufferList.clear(); // release ref
 			mSendRegistered.store(false);
 		}
+	}
+	else
+	{
+		_IncreaseSendCount(packetCount);
 	}
 }
 
@@ -315,5 +322,18 @@ void Session::HandleError(int32 errorCode)
 	default:
 		GConsoleLogger->WriteStdOut(Color::WHITE, L"Handle Error : %d\n", errorCode);
 		break;
+	}
+}
+
+void Session::_IncreaseSendCount(int32 packetCount)
+{
+	if (LMonitorData != nullptr)
+	{
+		if (LMonitorData->mSendCount > 200000000)
+		{
+			Monitoring::GetInstance().ResetSendSnapshot(LMonitorData, LMonitorData->mSendCount);
+		}
+
+		LMonitorData->mSendCount += packetCount;
 	}
 }

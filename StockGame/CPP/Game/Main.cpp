@@ -7,6 +7,7 @@
 #include "DBService.h"
 #include "ClientPacketHandler.h"
 #include "MapManager.h"
+#include "Monitoring.h"
 
 #define WORKER_TICK 64
 
@@ -51,31 +52,32 @@ int main()
 			});
 	}
 
-	GThreadManager->Launch([]() {
-		uint64 lastTick = ::GetTickCount64();
-
-		while (true)
+	GThreadManager->Launch([]() 
 		{
-			uint64 now = ::GetTickCount64();
-			uint64 delta = now - lastTick;
-			lastTick = now;
+			uint64 lastTick = ::GetTickCount64();
 
-			float deltaTime = delta / 1000.0f;  // 초 단위 변환 (예: 0.02)
-
-			MapManager::GetInstance().Update(deltaTime);
-
-			const uint64 endTick = ::GetTickCount64();
-			const uint64 elapsed = endTick - now;
-
-			if (elapsed < 20)
+			while (true)
 			{
-				std::this_thread::sleep_for(std::chrono::milliseconds(20 - elapsed));
+				uint64 now = ::GetTickCount64();
+				uint64 delta = now - lastTick;
+				lastTick = now;
+
+				float deltaTime = delta / 1000.0f;  // 초 단위 변환 (예: 0.02)
+
+				MapManager::GetInstance().Update(deltaTime);
+
+				const uint64 endTick = ::GetTickCount64();
+				const uint64 elapsed = endTick - now;
+
+				if (elapsed < 20)
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(20 - elapsed));
+				}
 			}
-		}
 		});
 
-	// Main Thread
-	DoWorkerJob(service);
+	// 모니터링 스레드를 메인스레드에서 돌려도 된다.
+	Monitoring::GetInstance().Start();
 
 	GThreadManager->Join();
 }

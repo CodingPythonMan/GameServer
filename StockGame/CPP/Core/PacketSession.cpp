@@ -1,4 +1,6 @@
 #include "PacketSession.h"
+#include "CoreTLS.h"
+#include "Monitoring.h"
 
 PacketSession::PacketSession()
 {
@@ -27,8 +29,24 @@ int32 PacketSession::OnRecv(BYTE* buffer, int32 len)
 		// 패킷 조립 성공
 		OnRecvPacket(&buffer[0], header.size);
 
+		// 모니터링 증가
+		_IncreaseRecvCount();
+
 		processLen += header.size;
 	}
 
 	return processLen;
+}
+
+void PacketSession::_IncreaseRecvCount()
+{
+	if (LMonitorData != nullptr)
+	{
+		if (LMonitorData->mRecvCount > 200000000)
+		{
+			Monitoring::GetInstance().ResetRecvSnapshot(LMonitorData, LMonitorData->mRecvCount);
+		}
+
+		LMonitorData->mRecvCount++;
+	}
 }

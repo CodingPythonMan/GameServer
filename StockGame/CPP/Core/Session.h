@@ -58,6 +58,8 @@ private:
 	void				ProcessSend(int32 numOfBytes);
 
 	void				HandleError(int32 errorCode);
+
+	void				_IncreaseSendCount(int32 packetCount);
 	
 protected:
 	// 컨텐츠 코드에서 재정의

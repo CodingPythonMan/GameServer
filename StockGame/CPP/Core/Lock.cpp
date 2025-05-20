@@ -29,7 +29,9 @@ void Lock::WriteLock(const char* name)
 		}
 
 		if (::GetTickCount64() - beginTick >= ACQUIRE_TIMEOUT_TICK)
+		{
 			CRASH("LOCK_TIMEOUT");
+		}
 
 		std::this_thread::yield();
 	}

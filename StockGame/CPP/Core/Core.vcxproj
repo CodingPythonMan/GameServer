@@ -38,6 +38,7 @@
     <ClInclude Include="Listener.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="MemoryPool.h" />
+    <ClInclude Include="Monitoring.h" />
     <ClInclude Include="NetAddress.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="PacketSession.h" />

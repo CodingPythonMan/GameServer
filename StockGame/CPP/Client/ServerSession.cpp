@@ -13,8 +13,6 @@ void ServerSession::OnConnected()
 {
 	// Connect 가 되면, 그 때 객체를 생성해서 객체가 움직이게 하면 되긴한다.
 	// C++ Client 는 봇이라고 봐야한다.
-
-
 	{
 		CSEnterGameReq req;
 		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(req);
@@ -32,7 +30,7 @@ void ServerSession::OnConnected()
 			GetPacketSessionRef()->Send(sendBuffer);
 		}
 
-		Sleep(3000);
+		Sleep(1000);
 
 		{
 			CSMoveReq req;
@@ -41,7 +39,7 @@ void ServerSession::OnConnected()
 			GetPacketSessionRef()->Send(sendBuffer);
 		}
 
-		Sleep(3000);
+		Sleep(1000);
 
 		{
 			CSMoveReq req;
@@ -50,7 +48,7 @@ void ServerSession::OnConnected()
 			GetPacketSessionRef()->Send(sendBuffer);
 		}
 
-		Sleep(3000);
+		Sleep(1000);
 
 		{
 			CSMoveReq req;
@@ -59,7 +57,7 @@ void ServerSession::OnConnected()
 			GetPacketSessionRef()->Send(sendBuffer);
 		}
 
-		Sleep(3000);
+		Sleep(1000);
 
 		{
 			CSStopReq req;
