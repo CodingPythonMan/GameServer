@@ -99,7 +99,6 @@ void SendBufferManager::Push(SendBufferChunkRef buffer)
 
 void SendBufferManager::PushGlobal(SendBufferChunk* buffer)
 {
-	// ÇØ´ç SendBufferChunk ´Â 
-	GConsoleLogger->WriteStdOut(Color::GREEN, L"PushGlobal SENDBUFFERCHUNK\n");
+	//GConsoleLogger->WriteStdOut(Color::GREEN, L"PushGlobal SENDBUFFERCHUNK\n");
 	GSendBufferManager->Push(SendBufferChunkRef(buffer, PushGlobal));
 }

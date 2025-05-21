@@ -60,7 +60,7 @@ Memory::~Memory()
 void* Memory::Allocate(int32 size)
 {
 	MemoryHeader* header = nullptr;
-	const int32 allocSize = size + sizeof(MemoryHeader);
+	const size_t allocSize = static_cast<size_t>(size) + sizeof(MemoryHeader);
 	if (allocSize > MAX_ALLOC_SIZE)
 	{
 		// 메모리 풀링 최대 크기를 벗어나면 일반 할당
@@ -79,7 +79,7 @@ void Memory::Release(void* ptr)
 {
 	MemoryHeader* header = MemoryHeader::DetachHeader(ptr);
 
-	const int32 allocSize = header->allocSize;
+	const size_t allocSize = header->allocSize;
 	ASSERT_CRASH(allocSize > 0);
 
 	if (allocSize > MAX_ALLOC_SIZE)

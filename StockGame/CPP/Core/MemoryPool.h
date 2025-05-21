@@ -12,9 +12,9 @@ DECLSPEC_ALIGN(SLIST_ALIGNMENT)
 struct MemoryHeader : public SLIST_ENTRY
 {
 	// [MemoryHeader][Data]
-	MemoryHeader(int32 size) : allocSize(size) {}
+	MemoryHeader(size_t size) : allocSize(size) {}
 
-	static void* AttachHeader(MemoryHeader* header, int32 size)
+	static void* AttachHeader(MemoryHeader* header, size_t size)
 	{
 		new(header)MemoryHeader(size); // placement new
 		return reinterpret_cast<void*>(++header);
@@ -26,7 +26,7 @@ struct MemoryHeader : public SLIST_ENTRY
 		return header;
 	}
 
-	int32 allocSize;
+	size_t allocSize;
 };
 
 DECLSPEC_ALIGN(SLIST_ALIGNMENT)

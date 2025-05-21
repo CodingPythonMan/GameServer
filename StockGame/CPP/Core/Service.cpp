@@ -69,15 +69,21 @@ bool ClientService::Start()
 		return false;
 	}
 
-	const int32 sessionCount = GetMaxSessionCount();
-	for (int32 i = 0; i < sessionCount; i++)
-	{
-		SessionRef session = CreateSession();
-		if (false == session->Connect())
+	// 한번에 모두 들어가는게 아닌 텀을 두고 연결한다.
+	std::thread([=]() {
+		const int32 sessionCount = GetMaxSessionCount();
+		for (int32 i = 0; i < sessionCount; i++)
 		{
-			return false;
+			SessionRef session = CreateSession();
+			if (false == session->Connect())
+			{
+				return false;
+			}
+
+			Sleep(100);
 		}
-	}
+		return true;
+		}).detach();
 
 	return true;
 }

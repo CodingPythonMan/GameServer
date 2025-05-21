@@ -11,7 +11,7 @@ int main()
 		NetAddress(L"10.0.0.25", 1537),
 		MakeShared<IocpCore>(),
 		MakeShared<ServerSession>,
-		1);
+		500);
 
 	service->Start();
 
