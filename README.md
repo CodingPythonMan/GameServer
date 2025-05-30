@@ -6,9 +6,7 @@
 
 ## 1. C++ / StockGame : IOCP 서버
 ### 🏆 프로젝트 개요
-**Godot 게임 엔진과 통신할 수 있는 C++ 기반의 IOCP 서버**입니다. 높은 성능과 안정성을 목표로 하며, 다음과 같은 기능을 포함하고 있습니다.
-
-
+**[Godot 게임 엔진](https://github.com/CodingPythonMan/GodotResearch)과 통신할 수 있는 C++ 기반의 IOCP 서버**입니다. 높은 성능과 안정성을 목표로 하며, 다음과 같은 기능을 포함하고 있습니다.
 - **IOCP 기반 비동기 네트워크 처리**
 - **메모리 풀(Memory Pool) 사용**을 통한 효율적인 리소스 관리
 - **std::weak_ptr 활용**하여 스마트 포인터 기반 메모리 관리

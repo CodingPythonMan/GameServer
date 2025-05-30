@@ -8,10 +8,10 @@
 int main()
 {
 	ClientServiceRef service = MakeShared<ClientService>(
-		NetAddress(L"10.0.0.25", 1537),
+		NetAddress(L"127.0.0.1", 1537),
 		MakeShared<IocpCore>(),
 		MakeShared<ServerSession>,
-		500);
+		5);
 
 	service->Start();
 

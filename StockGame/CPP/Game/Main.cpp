@@ -33,7 +33,7 @@ int main()
 	ClientPacketHandler::Initialize();
 
 	ServerServiceRef service = MakeShared<ServerService>(
-		NetAddress(L"10.0.0.25", 1537),
+		NetAddress(L"127.0.0.1", 1537),
 		MakeShared<IocpCore>(),
 		MakeShared<GameSession>,
 		10);
