@@ -42,6 +42,7 @@
     <ClInclude Include="NetAddress.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="PacketSession.h" />
+    <ClInclude Include="rapidjson.h" />
     <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="RefSingleton.h" />
     <ClInclude Include="SendBuffer.h" />
