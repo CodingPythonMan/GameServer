@@ -120,7 +120,7 @@
     <ClInclude Include="DBManager.h">
       <Filter>DB</Filter>
     </ClInclude>
-    <ClInclude Include="rapidjson.h">
+    <ClInclude Include="RapidJsonWrapper.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
@@ -190,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="DBManager.cpp">
       <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="RapidJsonWrapper.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -42,7 +42,7 @@
     <ClInclude Include="NetAddress.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="PacketSession.h" />
-    <ClInclude Include="rapidjson.h" />
+    <ClInclude Include="RapidJsonWrapper.h" />
     <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="RefSingleton.h" />
     <ClInclude Include="SendBuffer.h" />
@@ -69,6 +69,7 @@
     <ClCompile Include="MemoryPool.cpp" />
     <ClCompile Include="NetAddress.cpp" />
     <ClCompile Include="PacketSession.cpp" />
+    <ClCompile Include="RapidJsonWrapper.cpp" />
     <ClCompile Include="RecvBuffer.cpp" />
     <ClCompile Include="SendBuffer.cpp" />
     <ClCompile Include="Service.cpp" />
@@ -130,12 +131,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Libraries\$(ProjectName)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)\Libraries\Poco\Include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Libraries\Poco\Include\;$(SolutionDir)\Libraries\RapidJson\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Libraries\$(ProjectName)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)\Libraries\Poco\Include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Libraries\Poco\Include\;$(SolutionDir)\Libraries\RapidJson\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
