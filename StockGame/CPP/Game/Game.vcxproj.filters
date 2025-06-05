@@ -13,6 +13,9 @@
     <Filter Include="Handler">
       <UniqueIdentifier>{e1b93bf4-4843-4fa9-aed7-b4dca294d328}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\Map">
+      <UniqueIdentifier>{5cf9cc49-f8f7-47de-9392-1598c91e4503}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -33,8 +36,11 @@
     <ClCompile Include="ClientPacketHandler.cpp">
       <Filter>Handler</Filter>
     </ClCompile>
+    <ClCompile Include="MapData.cpp">
+      <Filter>Contents\Map</Filter>
+    </ClCompile>
     <ClCompile Include="MapManager.cpp">
-      <Filter>Contents</Filter>
+      <Filter>Contents\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,8 +62,11 @@
     <ClInclude Include="GameEnum.h">
       <Filter>Contents</Filter>
     </ClInclude>
+    <ClInclude Include="MapData.h">
+      <Filter>Contents\Map</Filter>
+    </ClInclude>
     <ClInclude Include="MapManager.h">
-      <Filter>Contents</Filter>
+      <Filter>Contents\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

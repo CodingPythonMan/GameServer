@@ -1,9 +1,9 @@
 #pragma once
 #include "RefSingleton.h"
-#include "Macro.h"
-#include <vector>
+#include "CoreGlobal.h"
+#include "ConsoleLog.h"
 #include <unordered_map>
-#include <iostream>
+
 
 struct MonitorData
 {
@@ -24,6 +24,8 @@ public:
 	{
 		while (false == mIsStop)
 		{
+			std::this_thread::sleep_for(std::chrono::seconds(10));
+
 			int totalRecv = 0;
 			int totalSend = 0;
 
@@ -41,10 +43,8 @@ public:
 					mPrevSnapshot[data].mSendCount = data->mSendCount;
 				}
 			}
-
-			std::cout << "[Monitor] Recv: " << totalRecv << ", Send: " << totalSend << std::endl;
-
-			std::this_thread::sleep_for(std::chrono::seconds(10));
+			GConsoleLogger->WriteStdOut(Color::GREEN, L"[Monitor] Recv: %d, Send: %d\n",
+				totalRecv, totalSend);
 		}
 	}
 

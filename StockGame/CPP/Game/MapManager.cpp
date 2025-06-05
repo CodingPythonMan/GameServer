@@ -3,6 +3,11 @@
 #include "ClientPacketHandler.h"
 #include "GameSession.h"
 
+void MapManager::Initialize()
+{
+	mMapData.LoadFromFile("map_data.json");
+}
+
 void MapManager::Update(float deltaTime)
 {
 	READ_LOCK;

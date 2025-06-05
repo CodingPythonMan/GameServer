@@ -151,26 +151,77 @@ bool RapidJsonWrapper::GetIntArray(const std::string& key, std::vector<int>& out
 {
     if (false == HasKey(key))
     {
-        return -1;
+        return false;
     }
 
-    const rapidjson::Value& value = mDocument[key.c_str()];
-    if (false == value.IsArray())
+    const rapidjson::Value& arr = mDocument[key.c_str()];
+    if (false == arr.IsArray())
     {
-        return -1;
+        return false;
+    }
+    outVec.clear();
+    for (rapidjson::SizeType i = 0; i < arr.Size(); i++)
+    {
+        if (true == arr[i].IsInt())
+        {
+            outVec.push_back(arr[i].GetInt());
+        }
     }
 
-    return static_cast<int>(value.Size());
+    return true;
 }
 
 bool RapidJsonWrapper::GetFloatArray(const std::string& key, std::vector<float>& outVec) const
 {
-    return false;
+    if (false == HasKey(key))
+    {
+        return false;
+    }
+
+    const rapidjson::Value& arr = mDocument[key.c_str()];
+    if (false == arr.IsArray())
+    {
+        return false;
+    }
+    outVec.clear();
+    for (rapidjson::SizeType i = 0; i < arr.Size(); i++)
+    {
+        if (true == arr[i].IsNumber())
+        {
+            outVec.push_back(static_cast<float>(arr[i].GetDouble()));
+        }
+    }
+
+    return true;
 }
 
 bool RapidJsonWrapper::GetStringArray(const std::string& key, std::vector<std::string>& outVec) const
 {
-    return false;
+    if (false == HasKey(key))
+    {
+        return false;
+    }
+
+    const rapidjson::Value& arr = mDocument[key.c_str()];
+    if (false == arr.IsArray())
+    {
+        return false;
+    }
+    outVec.clear();
+    for (rapidjson::SizeType i = 0; i < arr.Size(); i++)
+    {
+        if (true == arr[i].IsString())
+        {
+            outVec.push_back(arr[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+const rapidjson::Document& RapidJsonWrapper::GetDocument() const
+{
+    return mDocument;
 }
 
 bool RapidJsonWrapper::_ReadFileToString(const std::string& filePath, std::string& out) const

@@ -43,6 +43,9 @@ int main()
 	// 자!!! Poco 를 한번 사용해보자.
 	//DBManager::GetInstance().Init();
 
+	// Map Data 초기화
+	MapManager::GetInstance().Initialize();
+
 	for (int32 i = 0; i < 5; i++)
 	{
 		GThreadManager->Launch([&service]()

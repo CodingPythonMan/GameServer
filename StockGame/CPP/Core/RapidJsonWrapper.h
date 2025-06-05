@@ -43,6 +43,8 @@ public:
     /// 지정된 키 아래의 배열을 std::vector<std::string>로 반환
     bool GetStringArray(const std::string& key, std::vector<std::string>& outVec) const;
 
+    const rapidjson::Document& GetDocument() const;
+
 private:
     rapidjson::Document mDocument;
 
